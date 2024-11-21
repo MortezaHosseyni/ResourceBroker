@@ -61,6 +61,7 @@
             dgv_Users.ContextMenuStrip = cms_UsersTable;
             dgv_Users.Location = new Point(12, 12);
             dgv_Users.Name = "dgv_Users";
+            dgv_Users.ReadOnly = true;
             dgv_Users.Size = new Size(864, 400);
             dgv_Users.TabIndex = 0;
             // 
@@ -68,30 +69,30 @@
             // 
             cms_UsersTable.Items.AddRange(new ToolStripItem[] { btn_EditUser, btn_DeleteUser, toolStripMenuItem1, btn_MakeRequest });
             cms_UsersTable.Name = "cms_UsersTable";
-            cms_UsersTable.Size = new Size(181, 98);
+            cms_UsersTable.Size = new Size(155, 76);
             // 
             // btn_EditUser
             // 
             btn_EditUser.Name = "btn_EditUser";
-            btn_EditUser.Size = new Size(180, 22);
+            btn_EditUser.Size = new Size(154, 22);
             btn_EditUser.Text = "Edit";
             // 
             // btn_DeleteUser
             // 
             btn_DeleteUser.BackColor = Color.FromArgb(255, 192, 192);
             btn_DeleteUser.Name = "btn_DeleteUser";
-            btn_DeleteUser.Size = new Size(180, 22);
+            btn_DeleteUser.Size = new Size(154, 22);
             btn_DeleteUser.Text = "Delete";
             // 
             // toolStripMenuItem1
             // 
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new Size(177, 6);
+            toolStripMenuItem1.Size = new Size(151, 6);
             // 
             // btn_MakeRequest
             // 
             btn_MakeRequest.Name = "btn_MakeRequest";
-            btn_MakeRequest.Size = new Size(180, 22);
+            btn_MakeRequest.Size = new Size(154, 22);
             btn_MakeRequest.Text = "Make a request";
             // 
             // pnl_RegisterUser
