@@ -8,5 +8,7 @@ namespace ResourceBroker.Models
         [Required][MaxLength(80)] public required string LastName { get; set; }
         [Required][Phone] public required string PhoneNumber { get; set; }
         [Required][EmailAddress] public required string Email { get; set; }
+
+        public virtual ICollection<Request>? Requests { get; set; }
     }
 }
