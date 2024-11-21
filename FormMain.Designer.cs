@@ -33,6 +33,8 @@
             btn_Users = new Button();
             btn_Services = new Button();
             btn_Allocate = new Button();
+            button1 = new Button();
+            button2 = new Button();
             SuspendLayout();
             // 
             // rtb_MainLogs
@@ -52,6 +54,7 @@
             btn_Users.TabIndex = 1;
             btn_Users.Text = "Users";
             btn_Users.UseVisualStyleBackColor = true;
+            btn_Users.Click += btn_Users_Click;
             // 
             // btn_Services
             // 
@@ -72,11 +75,31 @@
             btn_Allocate.Text = "Allocate";
             btn_Allocate.UseVisualStyleBackColor = true;
             // 
+            // button1
+            // 
+            button1.Location = new Point(12, 166);
+            button1.Name = "button1";
+            button1.Size = new Size(412, 44);
+            button1.TabIndex = 4;
+            button1.Text = "Make Requests";
+            button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(12, 216);
+            button2.Name = "button2";
+            button2.Size = new Size(412, 44);
+            button2.TabIndex = 5;
+            button2.Text = "Packages";
+            button2.UseVisualStyleBackColor = true;
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(886, 583);
+            Controls.Add(button2);
+            Controls.Add(button1);
             Controls.Add(btn_Allocate);
             Controls.Add(btn_Services);
             Controls.Add(btn_Users);
@@ -95,5 +118,7 @@
         private Button btn_Users;
         private Button btn_Services;
         private Button btn_Allocate;
+        private Button button1;
+        private Button button2;
     }
 }
