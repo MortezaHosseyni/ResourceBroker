@@ -10,5 +10,6 @@ namespace ResourceBroker.Models
         [Required][EmailAddress] public required string Email { get; set; }
 
         public virtual ICollection<Request>? Requests { get; set; }
+        public virtual ICollection<Allocate>? Allocates { get; set; }
     }
 }

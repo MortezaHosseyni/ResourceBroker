@@ -16,5 +16,7 @@ namespace ResourceBroker.Models
 
         [Required] public required Guid ServiceId { get; set; }
         [ForeignKey(nameof(ServiceId))] public virtual Service? Service { get; set; }
+
+        public virtual ICollection<Allocate>? Allocates { get; set; }
     }
 }
