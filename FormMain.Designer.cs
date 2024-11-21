@@ -29,14 +29,60 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
+            rtb_MainLogs = new RichTextBox();
+            btn_Users = new Button();
+            btn_Services = new Button();
+            btn_Allocate = new Button();
             SuspendLayout();
+            // 
+            // rtb_MainLogs
+            // 
+            rtb_MainLogs.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            rtb_MainLogs.Location = new Point(430, 12);
+            rtb_MainLogs.Name = "rtb_MainLogs";
+            rtb_MainLogs.Size = new Size(444, 559);
+            rtb_MainLogs.TabIndex = 0;
+            rtb_MainLogs.Text = "";
+            // 
+            // btn_Users
+            // 
+            btn_Users.Location = new Point(12, 12);
+            btn_Users.Name = "btn_Users";
+            btn_Users.Size = new Size(412, 44);
+            btn_Users.TabIndex = 1;
+            btn_Users.Text = "Users";
+            btn_Users.UseVisualStyleBackColor = true;
+            // 
+            // btn_Services
+            // 
+            btn_Services.Location = new Point(12, 62);
+            btn_Services.Name = "btn_Services";
+            btn_Services.Size = new Size(412, 44);
+            btn_Services.TabIndex = 2;
+            btn_Services.Text = "Services";
+            btn_Services.UseVisualStyleBackColor = true;
+            // 
+            // btn_Allocate
+            // 
+            btn_Allocate.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btn_Allocate.Location = new Point(12, 507);
+            btn_Allocate.Name = "btn_Allocate";
+            btn_Allocate.Size = new Size(412, 64);
+            btn_Allocate.TabIndex = 3;
+            btn_Allocate.Text = "Allocate";
+            btn_Allocate.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(886, 583);
+            Controls.Add(btn_Allocate);
+            Controls.Add(btn_Services);
+            Controls.Add(btn_Users);
+            Controls.Add(rtb_MainLogs);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MinimumSize = new Size(902, 622);
             Name = "FormMain";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Resource Broker";
@@ -44,5 +90,10 @@
         }
 
         #endregion
+
+        private RichTextBox rtb_MainLogs;
+        private Button btn_Users;
+        private Button btn_Services;
+        private Button btn_Allocate;
     }
 }
