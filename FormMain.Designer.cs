@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             rtb_MainLogs = new RichTextBox();
             btn_Users = new Button();
@@ -37,6 +38,7 @@
             btn_Requests = new Button();
             btn_Allocations = new Button();
             sts_BottomStatus = new StatusStrip();
+            tlt_Hints = new ToolTip(components);
             SuspendLayout();
             // 
             // rtb_MainLogs
@@ -55,6 +57,7 @@
             btn_Users.Size = new Size(412, 44);
             btn_Users.TabIndex = 1;
             btn_Users.Text = "Users";
+            tlt_Hints.SetToolTip(btn_Users, "* Users list\r\n* Register / Edit / Delete User\r\n* Make request for a User");
             btn_Users.UseVisualStyleBackColor = true;
             btn_Users.Click += btn_Users_Click;
             // 
@@ -65,6 +68,7 @@
             btn_Services.Size = new Size(412, 44);
             btn_Services.TabIndex = 2;
             btn_Services.Text = "Services";
+            tlt_Hints.SetToolTip(btn_Services, "* Services list\r\n* Add / Edit / Delete Service\r\n* Service resources");
             btn_Services.UseVisualStyleBackColor = true;
             btn_Services.Click += btn_Services_Click;
             // 
@@ -76,6 +80,7 @@
             btn_Allocate.Size = new Size(412, 64);
             btn_Allocate.TabIndex = 3;
             btn_Allocate.Text = "Allocate";
+            tlt_Hints.SetToolTip(btn_Allocate, "Start allocation process");
             btn_Allocate.UseVisualStyleBackColor = true;
             // 
             // btn_Packages
@@ -86,6 +91,7 @@
             btn_Packages.Size = new Size(412, 44);
             btn_Packages.TabIndex = 5;
             btn_Packages.Text = "Packages";
+            tlt_Hints.SetToolTip(btn_Packages, "Ready-made packages");
             btn_Packages.UseVisualStyleBackColor = true;
             // 
             // btn_Requests
@@ -96,7 +102,9 @@
             btn_Requests.Size = new Size(412, 44);
             btn_Requests.TabIndex = 6;
             btn_Requests.Text = "Requests";
+            tlt_Hints.SetToolTip(btn_Requests, "Users requests");
             btn_Requests.UseVisualStyleBackColor = true;
+            btn_Requests.Click += btn_Requests_Click;
             // 
             // btn_Allocations
             // 
@@ -106,7 +114,9 @@
             btn_Allocations.Size = new Size(412, 44);
             btn_Allocations.TabIndex = 7;
             btn_Allocations.Text = "Allocations";
+            tlt_Hints.SetToolTip(btn_Allocations, "Requests allocations");
             btn_Allocations.UseVisualStyleBackColor = true;
+            btn_Allocations.Click += btn_Allocations_Click;
             // 
             // sts_BottomStatus
             // 
@@ -115,6 +125,12 @@
             sts_BottomStatus.Size = new Size(886, 22);
             sts_BottomStatus.TabIndex = 8;
             sts_BottomStatus.Text = "statusStrip1";
+            // 
+            // tlt_Hints
+            // 
+            tlt_Hints.AutoPopDelay = 10000;
+            tlt_Hints.InitialDelay = 500;
+            tlt_Hints.ReshowDelay = 100;
             // 
             // FormMain
             // 
@@ -149,5 +165,6 @@
         private Button btn_Requests;
         private Button btn_Allocations;
         private StatusStrip sts_BottomStatus;
+        private ToolTip tlt_Hints;
     }
 }

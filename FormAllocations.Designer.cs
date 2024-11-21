@@ -1,6 +1,6 @@
 ﻿namespace ResourceBroker
 {
-    partial class FormRequests
+    partial class FormAllocations
     {
         /// <summary>
         /// Required designer variable.
@@ -28,40 +28,40 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormRequests));
-            dgv_Requests = new DataGridView();
-            ((System.ComponentModel.ISupportInitialize)dgv_Requests).BeginInit();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAllocations));
+            dgv_Allocations = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)dgv_Allocations).BeginInit();
             SuspendLayout();
             // 
-            // dgv_Requests
+            // dgv_Allocations
             // 
-            dgv_Requests.AllowUserToAddRows = false;
-            dgv_Requests.AllowUserToDeleteRows = false;
-            dgv_Requests.BackgroundColor = SystemColors.ControlLight;
-            dgv_Requests.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgv_Requests.Dock = DockStyle.Fill;
-            dgv_Requests.Location = new Point(0, 0);
-            dgv_Requests.Name = "dgv_Requests";
-            dgv_Requests.ReadOnly = true;
-            dgv_Requests.Size = new Size(800, 450);
-            dgv_Requests.TabIndex = 0;
+            dgv_Allocations.AllowUserToAddRows = false;
+            dgv_Allocations.AllowUserToDeleteRows = false;
+            dgv_Allocations.BackgroundColor = SystemColors.ControlLight;
+            dgv_Allocations.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgv_Allocations.Dock = DockStyle.Fill;
+            dgv_Allocations.Location = new Point(0, 0);
+            dgv_Allocations.Name = "dgv_Allocations";
+            dgv_Allocations.ReadOnly = true;
+            dgv_Allocations.Size = new Size(800, 450);
+            dgv_Allocations.TabIndex = 0;
             // 
-            // FormRequests
+            // FormAllocations
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(dgv_Requests);
+            Controls.Add(dgv_Allocations);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Name = "FormRequests";
+            Name = "FormAllocations";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Requests";
-            ((System.ComponentModel.ISupportInitialize)dgv_Requests).EndInit();
+            Text = "Allocations";
+            ((System.ComponentModel.ISupportInitialize)dgv_Allocations).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private DataGridView dgv_Requests;
+        private DataGridView dgv_Allocations;
     }
 }
