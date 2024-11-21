@@ -64,6 +64,7 @@
             btn_Services.TabIndex = 2;
             btn_Services.Text = "Services";
             btn_Services.UseVisualStyleBackColor = true;
+            btn_Services.Click += btn_Services_Click;
             // 
             // btn_Allocate
             // 

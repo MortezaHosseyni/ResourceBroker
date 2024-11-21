@@ -12,5 +12,11 @@ namespace ResourceBroker
             var frmUsers = new FormUsers();
             frmUsers.Show();
         }
+
+        private void btn_Services_Click(object sender, EventArgs e)
+        {
+            var frmServices = new FormServices();
+            frmServices.Show();
+        }
     }
 }

@@ -28,8 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormUsers));
             dgv_Users = new DataGridView();
+            cms_UsersTable = new ContextMenuStrip(components);
+            btn_EditUser = new ToolStripMenuItem();
+            btn_DeleteUser = new ToolStripMenuItem();
+            toolStripMenuItem1 = new ToolStripSeparator();
+            btn_MakeRequest = new ToolStripMenuItem();
             pnl_RegisterUser = new Panel();
             btn_RegisterUser = new Button();
             lbl_Email = new Label();
@@ -41,18 +47,52 @@
             lbl_FirstName = new Label();
             txt_FirstName = new TextBox();
             ((System.ComponentModel.ISupportInitialize)dgv_Users).BeginInit();
+            cms_UsersTable.SuspendLayout();
             pnl_RegisterUser.SuspendLayout();
             SuspendLayout();
             // 
             // dgv_Users
             // 
+            dgv_Users.AllowUserToAddRows = false;
+            dgv_Users.AllowUserToDeleteRows = false;
             dgv_Users.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgv_Users.BackgroundColor = SystemColors.ControlLight;
             dgv_Users.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgv_Users.ContextMenuStrip = cms_UsersTable;
             dgv_Users.Location = new Point(12, 12);
             dgv_Users.Name = "dgv_Users";
             dgv_Users.Size = new Size(864, 400);
             dgv_Users.TabIndex = 0;
+            // 
+            // cms_UsersTable
+            // 
+            cms_UsersTable.Items.AddRange(new ToolStripItem[] { btn_EditUser, btn_DeleteUser, toolStripMenuItem1, btn_MakeRequest });
+            cms_UsersTable.Name = "cms_UsersTable";
+            cms_UsersTable.Size = new Size(181, 98);
+            // 
+            // btn_EditUser
+            // 
+            btn_EditUser.Name = "btn_EditUser";
+            btn_EditUser.Size = new Size(180, 22);
+            btn_EditUser.Text = "Edit";
+            // 
+            // btn_DeleteUser
+            // 
+            btn_DeleteUser.BackColor = Color.FromArgb(255, 192, 192);
+            btn_DeleteUser.Name = "btn_DeleteUser";
+            btn_DeleteUser.Size = new Size(180, 22);
+            btn_DeleteUser.Text = "Delete";
+            // 
+            // toolStripMenuItem1
+            // 
+            toolStripMenuItem1.Name = "toolStripMenuItem1";
+            toolStripMenuItem1.Size = new Size(177, 6);
+            // 
+            // btn_MakeRequest
+            // 
+            btn_MakeRequest.Name = "btn_MakeRequest";
+            btn_MakeRequest.Size = new Size(180, 22);
+            btn_MakeRequest.Text = "Make a request";
             // 
             // pnl_RegisterUser
             // 
@@ -166,6 +206,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Users";
             ((System.ComponentModel.ISupportInitialize)dgv_Users).EndInit();
+            cms_UsersTable.ResumeLayout(false);
             pnl_RegisterUser.ResumeLayout(false);
             pnl_RegisterUser.PerformLayout();
             ResumeLayout(false);
@@ -184,5 +225,10 @@
         private Label lbl_Email;
         private TextBox txt_Email;
         private Button btn_RegisterUser;
+        private ContextMenuStrip cms_UsersTable;
+        private ToolStripMenuItem btn_EditUser;
+        private ToolStripMenuItem btn_DeleteUser;
+        private ToolStripSeparator toolStripMenuItem1;
+        private ToolStripMenuItem btn_MakeRequest;
     }
 }
