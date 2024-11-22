@@ -5,7 +5,7 @@ using ResourceBroker.Models;
 
 namespace ResourceBroker.Repositories
 {
-    public interface IResourceRepository
+    public interface IResourceRepository : IGenericRepository<Resource>
     {
         Task<Resource> GetAvailableResourceAsync(Guid serviceId, Guid resourceId);
         Task<List<Resource>> GetAvailableResourcesAsync(Guid serviceId);
@@ -14,13 +14,13 @@ namespace ResourceBroker.Repositories
 
     public class ResourceRepository(
         ApplicationDbContext context,
-        ILogger<ResourceRepository> logger) : IResourceRepository
+        ILogger<ResourceRepository> logger) : GenericRepository<Resource>(context), IResourceRepository
     {
         public async Task<Resource> GetAvailableResourceAsync(Guid serviceId, Guid resourceId)
         {
             try
             {
-                return await context.Resources
+                return await Context.Resources
                     .Include(r => r.Service)
                     .FirstOrDefaultAsync(r =>
                         r.Id == resourceId &&
@@ -38,7 +38,7 @@ namespace ResourceBroker.Repositories
         {
             try
             {
-                return await context.Resources
+                return await Context.Resources
                     .Include(r => r.Service)
                     .Where(r =>
                         r.Service.Id == serviceId &&
@@ -56,7 +56,7 @@ namespace ResourceBroker.Repositories
         {
             try
             {
-                var resource = await context.Resources
+                var resource = await Context.Resources
                     .FirstOrDefaultAsync(r => r.Id == allocation.Resource.Id);
 
                 if (resource != null)
@@ -64,9 +64,9 @@ namespace ResourceBroker.Repositories
                     resource.IsAllocated = true;
                 }
 
-                context.Allocates.Add(allocation);
+                Context.Allocates.Add(allocation);
 
-                await context.SaveChangesAsync();
+                await Context.SaveChangesAsync();
 
                 logger.LogInformation(
                     $"Resource {allocation.Resource.Id} " +
@@ -84,7 +84,7 @@ namespace ResourceBroker.Repositories
         {
             try
             {
-                var query = context.Resources
+                var query = Context.Resources
                     .Include(r => r.Service)
                     .AsQueryable();
 
