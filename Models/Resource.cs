@@ -11,6 +11,8 @@ namespace ResourceBroker.Models
 
         public ResourceType Type { get; set; }
 
+        public bool IsAllocated { get; set; }
+
         public int Count { get; set; }
         public int Capacity { get; set; }
 
