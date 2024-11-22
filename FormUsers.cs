@@ -1,4 +1,5 @@
-﻿using ResourceBroker.Models;
+﻿using Microsoft.Extensions.DependencyInjection;
+using ResourceBroker.Models;
 using ResourceBroker.Repositories;
 using ResourceBroker.Utilities;
 
@@ -7,12 +8,14 @@ namespace ResourceBroker
     public partial class FormUsers : Form
     {
         private readonly IUserRepository _user;
+        private readonly IServiceProvider _serviceProvider;
 
-        public FormUsers(IUserRepository user)
+        public FormUsers(IUserRepository user, IServiceProvider serviceProvider)
         {
             InitializeComponent();
 
             _user = user;
+            _serviceProvider = serviceProvider;
         }
 
         private async void FormUsers_Load(object sender, EventArgs e)
@@ -54,7 +57,7 @@ namespace ResourceBroker
             try
             {
                 dgv_Users.Rows.Clear();
-                
+
                 var users = await _user.GetAllIncludeAsync(x => x.Requests, x => x.Allocates);
 
                 foreach (var user in users)
@@ -74,6 +77,14 @@ namespace ResourceBroker
             txt_LastName.Text = string.Empty;
             txt_Email.Text = string.Empty;
             txt_Phone.Text = string.Empty;
+        }
+
+        private void btn_MakeRequest_Click(object sender, EventArgs e)
+        {
+            using var scope = _serviceProvider.CreateScope();
+
+            var form = scope.ServiceProvider.GetRequiredService<FormMakeRequest>();
+            form.ShowDialog();
         }
     }
 }

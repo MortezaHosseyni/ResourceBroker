@@ -44,6 +44,7 @@ namespace ResourceBroker
             services.AddTransient<FormServices>();
             services.AddTransient<FormResources>();
             services.AddTransient<FormRequests>();
+            services.AddTransient<FormMakeRequest>();
             services.AddTransient<FormAllocations>();
         }
     }
