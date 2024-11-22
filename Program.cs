@@ -1,4 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using ResourceBroker.Context;
 using ResourceBroker.Repositories;
 
 namespace ResourceBroker
@@ -26,6 +28,8 @@ namespace ResourceBroker
 
         private static void ConfigureServices(ServiceCollection services)
         {
+            services.AddDbContext<ApplicationDbContext>();
+
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             services.AddScoped<IUserRepository, UserRepository>();
@@ -35,6 +39,12 @@ namespace ResourceBroker
             services.AddScoped<IAllocateRepository, AllocateRepository>();
 
             services.AddTransient<FormMain>();
+
+            services.AddTransient<FormUsers>();
+            services.AddTransient<FormServices>();
+            services.AddTransient<FormResources>();
+            services.AddTransient<FormRequests>();
+            services.AddTransient<FormAllocations>();
         }
     }
 }

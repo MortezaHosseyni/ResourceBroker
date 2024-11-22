@@ -31,13 +31,11 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormServices));
             dgv_Services = new DataGridView();
-            col_services_Id = new DataGridViewTextBoxColumn();
-            col_services_Name = new DataGridViewTextBoxColumn();
-            col_services_Description = new DataGridViewTextBoxColumn();
-            col_services_Download = new DataGridViewTextBoxColumn();
-            col_services_Upload = new DataGridViewTextBoxColumn();
-            col_services_Bandwidth = new DataGridViewTextBoxColumn();
-            col_services_CreatedAt = new DataGridViewTextBoxColumn();
+            cms_ServicesTable = new ContextMenuStrip(components);
+            btn_EditService = new ToolStripMenuItem();
+            btn_DeleteService = new ToolStripMenuItem();
+            toolStripMenuItem1 = new ToolStripSeparator();
+            btn_ServiceResources = new ToolStripMenuItem();
             pnl_AddService = new Panel();
             btn_AddService = new Button();
             txt_Bandwidth = new TextBox();
@@ -50,14 +48,17 @@
             lbl_Description = new Label();
             txt_Name = new TextBox();
             lbl_Name = new Label();
-            cms_ServicesTable = new ContextMenuStrip(components);
-            btn_EditService = new ToolStripMenuItem();
-            btn_DeleteService = new ToolStripMenuItem();
-            toolStripMenuItem1 = new ToolStripSeparator();
-            btn_ServiceResources = new ToolStripMenuItem();
+            col_services_Id = new DataGridViewTextBoxColumn();
+            col_services_Name = new DataGridViewTextBoxColumn();
+            col_services_Description = new DataGridViewTextBoxColumn();
+            col_services_Download = new DataGridViewTextBoxColumn();
+            col_services_Upload = new DataGridViewTextBoxColumn();
+            col_services_Bandwidth = new DataGridViewTextBoxColumn();
+            col_services_Resources = new DataGridViewTextBoxColumn();
+            col_services_CreatedAt = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dgv_Services).BeginInit();
-            pnl_AddService.SuspendLayout();
             cms_ServicesTable.SuspendLayout();
+            pnl_AddService.SuspendLayout();
             SuspendLayout();
             // 
             // dgv_Services
@@ -67,7 +68,7 @@
             dgv_Services.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgv_Services.BackgroundColor = SystemColors.ControlLight;
             dgv_Services.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgv_Services.Columns.AddRange(new DataGridViewColumn[] { col_services_Id, col_services_Name, col_services_Description, col_services_Download, col_services_Upload, col_services_Bandwidth, col_services_CreatedAt });
+            dgv_Services.Columns.AddRange(new DataGridViewColumn[] { col_services_Id, col_services_Name, col_services_Description, col_services_Download, col_services_Upload, col_services_Bandwidth, col_services_Resources, col_services_CreatedAt });
             dgv_Services.ContextMenuStrip = cms_ServicesTable;
             dgv_Services.Location = new Point(12, 12);
             dgv_Services.Name = "dgv_Services";
@@ -75,54 +76,36 @@
             dgv_Services.Size = new Size(847, 387);
             dgv_Services.TabIndex = 0;
             // 
-            // col_services_Id
+            // cms_ServicesTable
             // 
-            col_services_Id.HeaderText = "Id";
-            col_services_Id.Name = "col_services_Id";
-            col_services_Id.ReadOnly = true;
-            col_services_Id.Visible = false;
+            cms_ServicesTable.Items.AddRange(new ToolStripItem[] { btn_EditService, btn_DeleteService, toolStripMenuItem1, btn_ServiceResources });
+            cms_ServicesTable.Name = "cms_ServicesTable";
+            cms_ServicesTable.Size = new Size(128, 76);
             // 
-            // col_services_Name
+            // btn_EditService
             // 
-            col_services_Name.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col_services_Name.HeaderText = "Name";
-            col_services_Name.Name = "col_services_Name";
-            col_services_Name.ReadOnly = true;
+            btn_EditService.Name = "btn_EditService";
+            btn_EditService.Size = new Size(127, 22);
+            btn_EditService.Text = "Edit";
             // 
-            // col_services_Description
+            // btn_DeleteService
             // 
-            col_services_Description.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col_services_Description.HeaderText = "Description";
-            col_services_Description.Name = "col_services_Description";
-            col_services_Description.ReadOnly = true;
+            btn_DeleteService.BackColor = Color.FromArgb(255, 192, 192);
+            btn_DeleteService.Name = "btn_DeleteService";
+            btn_DeleteService.Size = new Size(127, 22);
+            btn_DeleteService.Text = "Delete";
             // 
-            // col_services_Download
+            // toolStripMenuItem1
             // 
-            col_services_Download.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col_services_Download.HeaderText = "Download";
-            col_services_Download.Name = "col_services_Download";
-            col_services_Download.ReadOnly = true;
+            toolStripMenuItem1.Name = "toolStripMenuItem1";
+            toolStripMenuItem1.Size = new Size(124, 6);
             // 
-            // col_services_Upload
+            // btn_ServiceResources
             // 
-            col_services_Upload.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col_services_Upload.HeaderText = "Upload";
-            col_services_Upload.Name = "col_services_Upload";
-            col_services_Upload.ReadOnly = true;
-            // 
-            // col_services_Bandwidth
-            // 
-            col_services_Bandwidth.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col_services_Bandwidth.HeaderText = "Bandwidth";
-            col_services_Bandwidth.Name = "col_services_Bandwidth";
-            col_services_Bandwidth.ReadOnly = true;
-            // 
-            // col_services_CreatedAt
-            // 
-            col_services_CreatedAt.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col_services_CreatedAt.HeaderText = "Added Date";
-            col_services_CreatedAt.Name = "col_services_CreatedAt";
-            col_services_CreatedAt.ReadOnly = true;
+            btn_ServiceResources.Name = "btn_ServiceResources";
+            btn_ServiceResources.Size = new Size(127, 22);
+            btn_ServiceResources.Text = "Resources";
+            btn_ServiceResources.Click += btn_ServiceResources_Click;
             // 
             // pnl_AddService
             // 
@@ -152,6 +135,7 @@
             btn_AddService.TabIndex = 10;
             btn_AddService.Text = "Add Service";
             btn_AddService.UseVisualStyleBackColor = true;
+            btn_AddService.Click += btn_AddService_Click;
             // 
             // txt_Bandwidth
             // 
@@ -244,36 +228,61 @@
             lbl_Name.TabIndex = 0;
             lbl_Name.Text = "Name";
             // 
-            // cms_ServicesTable
+            // col_services_Id
             // 
-            cms_ServicesTable.Items.AddRange(new ToolStripItem[] { btn_EditService, btn_DeleteService, toolStripMenuItem1, btn_ServiceResources });
-            cms_ServicesTable.Name = "cms_ServicesTable";
-            cms_ServicesTable.Size = new Size(128, 76);
+            col_services_Id.HeaderText = "Id";
+            col_services_Id.Name = "col_services_Id";
+            col_services_Id.ReadOnly = true;
+            col_services_Id.Visible = false;
             // 
-            // btn_EditService
+            // col_services_Name
             // 
-            btn_EditService.Name = "btn_EditService";
-            btn_EditService.Size = new Size(127, 22);
-            btn_EditService.Text = "Edit";
+            col_services_Name.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col_services_Name.HeaderText = "Name";
+            col_services_Name.Name = "col_services_Name";
+            col_services_Name.ReadOnly = true;
             // 
-            // btn_DeleteService
+            // col_services_Description
             // 
-            btn_DeleteService.BackColor = Color.FromArgb(255, 192, 192);
-            btn_DeleteService.Name = "btn_DeleteService";
-            btn_DeleteService.Size = new Size(127, 22);
-            btn_DeleteService.Text = "Delete";
+            col_services_Description.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col_services_Description.HeaderText = "Description";
+            col_services_Description.Name = "col_services_Description";
+            col_services_Description.ReadOnly = true;
             // 
-            // toolStripMenuItem1
+            // col_services_Download
             // 
-            toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new Size(124, 6);
+            col_services_Download.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col_services_Download.HeaderText = "Download";
+            col_services_Download.Name = "col_services_Download";
+            col_services_Download.ReadOnly = true;
             // 
-            // btn_ServiceResources
+            // col_services_Upload
             // 
-            btn_ServiceResources.Name = "btn_ServiceResources";
-            btn_ServiceResources.Size = new Size(127, 22);
-            btn_ServiceResources.Text = "Resources";
-            btn_ServiceResources.Click += btn_ServiceResources_Click;
+            col_services_Upload.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col_services_Upload.HeaderText = "Upload";
+            col_services_Upload.Name = "col_services_Upload";
+            col_services_Upload.ReadOnly = true;
+            // 
+            // col_services_Bandwidth
+            // 
+            col_services_Bandwidth.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col_services_Bandwidth.HeaderText = "Bandwidth";
+            col_services_Bandwidth.Name = "col_services_Bandwidth";
+            col_services_Bandwidth.ReadOnly = true;
+            // 
+            // col_services_Resources
+            // 
+            col_services_Resources.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col_services_Resources.HeaderText = "Resources";
+            col_services_Resources.Name = "col_services_Resources";
+            col_services_Resources.ReadOnly = true;
+            // 
+            // col_services_CreatedAt
+            // 
+            col_services_CreatedAt.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col_services_CreatedAt.HeaderText = "Added Date";
+            col_services_CreatedAt.Name = "col_services_CreatedAt";
+            col_services_CreatedAt.ReadOnly = true;
             // 
             // FormServices
             // 
@@ -287,10 +296,11 @@
             Name = "FormServices";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Services";
+            Load += FormServices_Load;
             ((System.ComponentModel.ISupportInitialize)dgv_Services).EndInit();
+            cms_ServicesTable.ResumeLayout(false);
             pnl_AddService.ResumeLayout(false);
             pnl_AddService.PerformLayout();
-            cms_ServicesTable.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -320,6 +330,7 @@
         private DataGridViewTextBoxColumn col_services_Download;
         private DataGridViewTextBoxColumn col_services_Upload;
         private DataGridViewTextBoxColumn col_services_Bandwidth;
+        private DataGridViewTextBoxColumn col_services_Resources;
         private DataGridViewTextBoxColumn col_services_CreatedAt;
     }
 }

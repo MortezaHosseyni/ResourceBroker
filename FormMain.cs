@@ -1,34 +1,48 @@
+using Microsoft.Extensions.DependencyInjection;
+
 namespace ResourceBroker
 {
     public partial class FormMain : Form
     {
-        public FormMain()
+        private readonly IServiceProvider _serviceProvider;
+
+        public FormMain(IServiceProvider serviceProvider)
         {
             InitializeComponent();
+
+            _serviceProvider = serviceProvider;
         }
 
         private void btn_Users_Click(object sender, EventArgs e)
         {
-            var frmUsers = new FormUsers();
-            frmUsers.Show();
+            using var scope = _serviceProvider.CreateScope();
+
+            var form = scope.ServiceProvider.GetRequiredService<FormUsers>();
+            form.ShowDialog();
         }
 
         private void btn_Services_Click(object sender, EventArgs e)
         {
-            var frmServices = new FormServices();
-            frmServices.Show();
+            using var scope = _serviceProvider.CreateScope();
+
+            var form = scope.ServiceProvider.GetRequiredService<FormServices>();
+            form.ShowDialog();
         }
 
         private void btn_Requests_Click(object sender, EventArgs e)
         {
-            var frmRequests = new FormRequests();
-            frmRequests.Show();
+            using var scope = _serviceProvider.CreateScope();
+
+            var form = scope.ServiceProvider.GetRequiredService<FormRequests>();
+            form.ShowDialog();
         }
 
         private void btn_Allocations_Click(object sender, EventArgs e)
         {
-            var frmAllocations = new FormAllocations();
-            frmAllocations.Show();
+            using var scope = _serviceProvider.CreateScope();
+
+            var form = scope.ServiceProvider.GetRequiredService<FormAllocations>();
+            form.ShowDialog();
         }
     }
 }
