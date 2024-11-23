@@ -15,6 +15,8 @@ namespace ResourceBroker.Context
         {
             var databasePath = Path.Combine(Directory.GetCurrentDirectory(), "ResourceBroker.db");
             optionsBuilder.UseSqlite($"Data Source={databasePath};");
+
+            optionsBuilder.EnableSensitiveDataLogging();
         }
     }
 }

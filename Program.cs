@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ResourceBroker.Context;
+using ResourceBroker.Logic;
 using ResourceBroker.Repositories;
 
 namespace ResourceBroker
@@ -46,6 +47,9 @@ namespace ResourceBroker
             services.AddTransient<FormRequests>();
             services.AddTransient<FormMakeRequest>();
             services.AddTransient<FormAllocations>();
+
+            services.AddScoped<Gwo>();
+            services.AddScoped<ResourceAllocator>();
         }
     }
 }

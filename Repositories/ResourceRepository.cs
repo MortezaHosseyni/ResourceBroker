@@ -56,7 +56,7 @@ namespace ResourceBroker.Repositories
             try
             {
                 var resource = await Context.Resources
-                    .FirstOrDefaultAsync(r => r.Id == allocation.Resource.Id);
+                    .FirstOrDefaultAsync(r => r.Id == allocation.ResourceId);
 
                 if (resource != null)
                 {
@@ -68,8 +68,8 @@ namespace ResourceBroker.Repositories
                 await Context.SaveChangesAsync();
 
                 await Logger.Log(
-                    $"Resource {allocation.Resource.Id} " +
-                    $"allocated to User {allocation.User.Id}");
+                    $"Resource |{allocation.ResourceId}| " +
+                    $"allocated to User |{allocation.UserId}|");
             }
             catch (Exception ex)
             {

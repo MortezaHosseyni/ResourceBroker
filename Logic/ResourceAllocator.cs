@@ -1,4 +1,5 @@
-﻿using ResourceBroker.Models;
+﻿using ResourceBroker.Enums;
+using ResourceBroker.Models;
 using ResourceBroker.Repositories;
 using ResourceBroker.Utilities;
 
@@ -6,7 +7,8 @@ namespace ResourceBroker.Logic
 {
     public class ResourceAllocator(
         Gwo optimizer,
-        IResourceRepository resourceRepository)
+        IResourceRepository resourceRepository,
+        IRequestRepository requestRepository)
     {
         public async Task<AllocationResult> AllocateResourceAsync(Request request)
         {
@@ -15,6 +17,9 @@ namespace ResourceBroker.Logic
                 // Validate request
                 if (!ValidateRequest(request))
                 {
+                    request.Status = RequestStatus.Rejected;
+                    requestRepository.Update(request);
+
                     return CreateFailedAllocation(
                         AllocationFailureReason.InvalidRequest,
                         "Request validation failed"
@@ -33,6 +38,9 @@ namespace ResourceBroker.Logic
             }
             catch (Exception ex)
             {
+                request.Status = RequestStatus.Rejected;
+                requestRepository.Update(request);
+
                 await Logger.Log($"Resource allocation failed: {ex.Message}");
                 return CreateFailedAllocation(
                     AllocationFailureReason.SystemError,
@@ -56,6 +64,9 @@ namespace ResourceBroker.Logic
             if (availableResource == null) return AllocationResult.Failed();
             var allocation = CreateAllocation(request, availableResource);
             await resourceRepository.SaveAllocationAsync(allocation);
+
+            request.Status = RequestStatus.Allocated;
+            requestRepository.Update(request);
 
             return new AllocationResult
             {
@@ -98,6 +109,9 @@ namespace ResourceBroker.Logic
 
             await resourceRepository.SaveAllocationAsync(allocation);
 
+            request.Status = RequestStatus.SuggestedAnother;
+            requestRepository.Update(request);
+
             return new AllocationResult
             {
                 IsSuccessful = true,
@@ -114,7 +128,8 @@ namespace ResourceBroker.Logic
                 Id = Guid.NewGuid(),
                 UserId = request.User!.Id,
                 ResourceId = resource.Id,
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
             };
         }
 

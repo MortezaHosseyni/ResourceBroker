@@ -29,11 +29,11 @@ namespace ResourceBroker
         {
             try
             {
-                var cpus = await _resource.FindIncludeAsync(r => r.Type == ResourceType.Cpu, x => x.Service!);
-                var gpus = await _resource.FindIncludeAsync(r => r.Type == ResourceType.Gpu, x => x.Service!);
-                var rams = await _resource.FindIncludeAsync(r => r.Type == ResourceType.Ram, x => x.Service!);
-                var ssds = await _resource.FindIncludeAsync(r => r.Type == ResourceType.Ssd, x => x.Service!);
-                var hdds = await _resource.FindIncludeAsync(r => r.Type == ResourceType.Hdd, x => x.Service!);
+                var cpus = await _resource.FindIncludeAsync(r => r.Type == ResourceType.Cpu && !r.IsAllocated, x => x.Service!);
+                var gpus = await _resource.FindIncludeAsync(r => r.Type == ResourceType.Gpu && !r.IsAllocated, x => x.Service!);
+                var rams = await _resource.FindIncludeAsync(r => r.Type == ResourceType.Ram && !r.IsAllocated, x => x.Service!);
+                var ssds = await _resource.FindIncludeAsync(r => r.Type == ResourceType.Ssd && !r.IsAllocated, x => x.Service!);
+                var hdds = await _resource.FindIncludeAsync(r => r.Type == ResourceType.Hdd && !r.IsAllocated, x => x.Service!);
 
                 cmb_Cpu.DataSource = null;
                 cmb_Cpu.DataSource = cpus;

@@ -1,4 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
+using ResourceBroker.Logic;
+using ResourceBroker.Repositories;
 
 namespace ResourceBroker
 {
@@ -6,15 +8,26 @@ namespace ResourceBroker
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public FormMain(IServiceProvider serviceProvider)
+        private readonly ResourceAllocator _allocator;
+        private readonly IRequestRepository _request;
+
+        public FormMain(IServiceProvider serviceProvider, ResourceAllocator allocator, IRequestRepository request)
         {
             InitializeComponent();
 
             _serviceProvider = serviceProvider;
+            _allocator = allocator;
+            _request = request;
         }
 
         private async void FormMain_Load(object sender, EventArgs e)
         {
+            await LoadLogs();
+        }
+
+        private async Task LoadLogs()
+        {
+            rtb_MainLogs.Text = string.Empty;
             rtb_MainLogs.Text = await File.ReadAllTextAsync("mainlogs.txt");
         }
 
@@ -48,6 +61,20 @@ namespace ResourceBroker
 
             var form = scope.ServiceProvider.GetRequiredService<FormAllocations>();
             form.ShowDialog();
+        }
+
+        private async void btn_Allocate_Click(object sender, EventArgs e)
+        {
+            var requests = await _request.GetAllPendingRequests();
+
+            foreach (var request in requests)
+            {
+                await _allocator.AllocateResourceAsync(request);
+            }
+
+            await LoadLogs();
+
+            MessageBox.Show(@"All requests has been allocated resource.", @"Resource Allocator!", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
     }
 }

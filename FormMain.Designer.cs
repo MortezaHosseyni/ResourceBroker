@@ -50,6 +50,7 @@
             rtb_MainLogs.Size = new Size(444, 546);
             rtb_MainLogs.TabIndex = 0;
             rtb_MainLogs.Text = "";
+            rtb_MainLogs.WordWrap = false;
             // 
             // btn_Users
             // 
@@ -83,10 +84,12 @@
             btn_Allocate.Text = "Allocate";
             tlt_Hints.SetToolTip(btn_Allocate, "Start allocation process");
             btn_Allocate.UseVisualStyleBackColor = true;
+            btn_Allocate.Click += btn_Allocate_Click;
             // 
             // btn_Packages
             // 
             btn_Packages.Anchor = AnchorStyles.Left;
+            btn_Packages.Enabled = false;
             btn_Packages.Location = new Point(12, 330);
             btn_Packages.Name = "btn_Packages";
             btn_Packages.Size = new Size(412, 44);
