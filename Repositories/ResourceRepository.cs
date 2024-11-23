@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using ResourceBroker.Context;
 using ResourceBroker.Models;
+using ResourceBroker.Utilities;
 
 namespace ResourceBroker.Repositories
 {
@@ -13,8 +13,7 @@ namespace ResourceBroker.Repositories
     }
 
     public class ResourceRepository(
-        ApplicationDbContext context,
-        ILogger<ResourceRepository> logger) : GenericRepository<Resource>(context), IResourceRepository
+        ApplicationDbContext context) : GenericRepository<Resource>(context), IResourceRepository
     {
         public async Task<Resource> GetAvailableResourceAsync(Guid serviceId, Guid resourceId)
         {
@@ -29,7 +28,7 @@ namespace ResourceBroker.Repositories
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Error retrieving available resource");
+                await Logger.Log($"Error retrieving available resource: {ex.Message}");
                 throw;
             }
         }
@@ -47,7 +46,7 @@ namespace ResourceBroker.Repositories
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Error retrieving available resources");
+                await Logger.Log($"Error retrieving available resources: {ex.Message}");
                 throw;
             }
         }
@@ -68,13 +67,13 @@ namespace ResourceBroker.Repositories
 
                 await Context.SaveChangesAsync();
 
-                logger.LogInformation(
+                await Logger.Log(
                     $"Resource {allocation.Resource.Id} " +
                     $"allocated to User {allocation.User.Id}");
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Error saving allocation");
+                await Logger.Log($"Error saving allocation: {ex.Message}");
                 throw;
             }
         }
@@ -109,7 +108,7 @@ namespace ResourceBroker.Repositories
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Error searching resources");
+                await Logger.Log($"Error searching resources: {ex.Message}");
                 throw;
             }
         }

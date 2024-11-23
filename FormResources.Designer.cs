@@ -38,6 +38,9 @@
             col_resources_Count = new DataGridViewTextBoxColumn();
             col_resources_Capacity = new DataGridViewTextBoxColumn();
             col_resources_CreatedAt = new DataGridViewTextBoxColumn();
+            cms_ResourcesTable = new ContextMenuStrip(components);
+            btn_EditResource = new ToolStripMenuItem();
+            btn_DeleteResource = new ToolStripMenuItem();
             pnl_AddResource = new Panel();
             btn_AddResource = new Button();
             txt_Capacity = new TextBox();
@@ -50,12 +53,9 @@
             lbl_Description = new Label();
             txt_Name = new TextBox();
             lbl_Name = new Label();
-            cms_ResourcesTable = new ContextMenuStrip(components);
-            btn_EditResource = new ToolStripMenuItem();
-            btn_DeleteResource = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)dgv_Resources).BeginInit();
-            pnl_AddResource.SuspendLayout();
             cms_ResourcesTable.SuspendLayout();
+            pnl_AddResource.SuspendLayout();
             SuspendLayout();
             // 
             // dgv_Resources
@@ -122,6 +122,25 @@
             col_resources_CreatedAt.Name = "col_resources_CreatedAt";
             col_resources_CreatedAt.ReadOnly = true;
             // 
+            // cms_ResourcesTable
+            // 
+            cms_ResourcesTable.Items.AddRange(new ToolStripItem[] { btn_EditResource, btn_DeleteResource });
+            cms_ResourcesTable.Name = "cms_ResourcesTable";
+            cms_ResourcesTable.Size = new Size(108, 48);
+            // 
+            // btn_EditResource
+            // 
+            btn_EditResource.Name = "btn_EditResource";
+            btn_EditResource.Size = new Size(107, 22);
+            btn_EditResource.Text = "Edit";
+            // 
+            // btn_DeleteResource
+            // 
+            btn_DeleteResource.BackColor = Color.FromArgb(255, 192, 192);
+            btn_DeleteResource.Name = "btn_DeleteResource";
+            btn_DeleteResource.Size = new Size(107, 22);
+            btn_DeleteResource.Text = "Delete";
+            // 
             // pnl_AddResource
             // 
             pnl_AddResource.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -150,6 +169,7 @@
             btn_AddResource.TabIndex = 14;
             btn_AddResource.Text = "Add Resource";
             btn_AddResource.UseVisualStyleBackColor = true;
+            btn_AddResource.Click += btn_AddResource_Click;
             // 
             // txt_Capacity
             // 
@@ -201,6 +221,7 @@
             // 
             cmb_ResourceType.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             cmb_ResourceType.FormattingEnabled = true;
+            cmb_ResourceType.Items.AddRange(new object[] { "Cpu", "Gpu", "Ram", "Ssd", "Hdd" });
             cmb_ResourceType.Location = new Point(330, 6);
             cmb_ResourceType.Name = "cmb_ResourceType";
             cmb_ResourceType.Size = new Size(139, 23);
@@ -243,25 +264,6 @@
             lbl_Name.TabIndex = 4;
             lbl_Name.Text = "Name";
             // 
-            // cms_ResourcesTable
-            // 
-            cms_ResourcesTable.Items.AddRange(new ToolStripItem[] { btn_EditResource, btn_DeleteResource });
-            cms_ResourcesTable.Name = "cms_ResourcesTable";
-            cms_ResourcesTable.Size = new Size(108, 48);
-            // 
-            // btn_EditResource
-            // 
-            btn_EditResource.Name = "btn_EditResource";
-            btn_EditResource.Size = new Size(107, 22);
-            btn_EditResource.Text = "Edit";
-            // 
-            // btn_DeleteResource
-            // 
-            btn_DeleteResource.BackColor = Color.FromArgb(255, 192, 192);
-            btn_DeleteResource.Name = "btn_DeleteResource";
-            btn_DeleteResource.Size = new Size(107, 22);
-            btn_DeleteResource.Text = "Delete";
-            // 
             // FormResources
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -274,10 +276,11 @@
             Name = "FormResources";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Resources";
+            Load += FormResources_Load;
             ((System.ComponentModel.ISupportInitialize)dgv_Resources).EndInit();
+            cms_ResourcesTable.ResumeLayout(false);
             pnl_AddResource.ResumeLayout(false);
             pnl_AddResource.PerformLayout();
-            cms_ResourcesTable.ResumeLayout(false);
             ResumeLayout(false);
         }
 

@@ -25,9 +25,28 @@ namespace ResourceBroker
 
         private void btn_ServiceResources_Click(object sender, EventArgs e)
         {
+            if (dgv_Services.SelectedRows.Count <= 0)
+            {
+                MessageBox.Show(@"Please select a Service.", @"Select Service!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var selectedRow = dgv_Services.SelectedRows[0];
+
+            var selectedService = new Service
+            {
+                Id = Guid.Parse(selectedRow.Cells["col_services_Id"].Value.ToString()!),
+                Name = selectedRow.Cells["col_services_Name"].Value.ToString()!,
+                Description = selectedRow.Cells["col_services_Description"].Value.ToString()!,
+                Download = float.Parse(selectedRow.Cells["col_services_Download"].Value.ToString()!),
+                Upload = float.Parse(selectedRow.Cells["col_services_Upload"].Value.ToString()!),
+                Bandwidth = float.Parse(selectedRow.Cells["col_services_Bandwidth"].Value.ToString()!)
+            };
+
             using var scope = _serviceProvider.CreateScope();
 
             var form = scope.ServiceProvider.GetRequiredService<FormResources>();
+            form.Service = selectedService;
             form.ShowDialog();
         }
 
