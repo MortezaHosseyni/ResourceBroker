@@ -13,6 +13,11 @@ namespace ResourceBroker
             _serviceProvider = serviceProvider;
         }
 
+        private async void FormMain_Load(object sender, EventArgs e)
+        {
+            rtb_MainLogs.Text = await File.ReadAllTextAsync("mainlogs.txt");
+        }
+
         private void btn_Users_Click(object sender, EventArgs e)
         {
             using var scope = _serviceProvider.CreateScope();

@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using ResourceBroker.Models;
 
 namespace ResourceBroker
 {
     public partial class FormMakeRequest : Form
     {
+        public required User User;
+
         public FormMakeRequest()
         {
             InitializeComponent();
+        }
+
+        private void FormMakeRequest_Load(object sender, EventArgs e)
+        {
+            this.Text = @$"Make Request | {User.FirstName} {User.LastName}";
         }
     }
 }

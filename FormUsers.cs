@@ -27,6 +27,15 @@ namespace ResourceBroker
         {
             try
             {
+                if (string.IsNullOrEmpty(txt_FirstName.Text) ||
+                    string.IsNullOrEmpty(txt_LastName.Text) ||
+                    string.IsNullOrEmpty(txt_Email.Text) ||
+                    string.IsNullOrEmpty(txt_Phone.Text))
+                {
+                    MessageBox.Show(@"Please fill the required fields", @"Fill The Fields!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 var user = new User
                 {
                     Id = Guid.NewGuid(),
@@ -62,7 +71,7 @@ namespace ResourceBroker
 
                 foreach (var user in users)
                 {
-                    dgv_Users.Rows.Add(user.Id, $"{user.FirstName} {user.LastName}", user.PhoneNumber, user.Email, user.Requests?.Count, user.Allocates?.Count, user.CreatedAt);
+                    dgv_Users.Rows.Add(user.Id, user.FirstName, user.LastName, user.PhoneNumber, user.Email, user.Requests?.Count, user.Allocates?.Count, user.CreatedAt);
                 }
             }
             catch (Exception ex)
@@ -81,9 +90,27 @@ namespace ResourceBroker
 
         private void btn_MakeRequest_Click(object sender, EventArgs e)
         {
+            if (dgv_Users.SelectedRows.Count <= 0)
+            {
+                MessageBox.Show(@"Please select a User.", @"Select User!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var selectedRow = dgv_Users.SelectedRows[0];
+
+            var selectedUser = new User
+            {
+                Id = Guid.Parse(selectedRow.Cells["col_users_Id"].Value.ToString()!),
+                FirstName = selectedRow.Cells["col_users_FirstName"].Value.ToString()!,
+                LastName = selectedRow.Cells["col_users_LastName"].Value.ToString()!,
+                PhoneNumber = selectedRow.Cells["col_users_Phone"].Value.ToString()!,
+                Email = selectedRow.Cells["col_users_Email"].Value.ToString()!
+            };
+
             using var scope = _serviceProvider.CreateScope();
 
             var form = scope.ServiceProvider.GetRequiredService<FormMakeRequest>();
+            form.User = selectedUser;
             form.ShowDialog();
         }
     }

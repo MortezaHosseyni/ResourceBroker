@@ -46,6 +46,7 @@
             rtb_MainLogs.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             rtb_MainLogs.Location = new Point(430, 12);
             rtb_MainLogs.Name = "rtb_MainLogs";
+            rtb_MainLogs.ReadOnly = true;
             rtb_MainLogs.Size = new Size(444, 546);
             rtb_MainLogs.TabIndex = 0;
             rtb_MainLogs.Text = "";
@@ -150,6 +151,7 @@
             Name = "FormMain";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Resource Broker";
+            Load += FormMain_Load;
             ResumeLayout(false);
             PerformLayout();
         }

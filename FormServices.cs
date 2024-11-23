@@ -35,6 +35,12 @@ namespace ResourceBroker
         {
             try
             {
+                if (string.IsNullOrEmpty(txt_Name.Text))
+                {
+                    MessageBox.Show(@"Please fill the Name field", @"Service Name?!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 var service = new Service
                 {
                     Id = Guid.NewGuid(),
