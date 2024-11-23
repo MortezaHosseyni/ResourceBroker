@@ -33,9 +33,7 @@
             col_requests_Id = new DataGridViewTextBoxColumn();
             col_requests_User = new DataGridViewTextBoxColumn();
             col_requests_Status = new DataGridViewTextBoxColumn();
-            col_requests_Type = new DataGridViewTextBoxColumn();
-            col_requests_Count = new DataGridViewTextBoxColumn();
-            col_requests_Capacity = new DataGridViewTextBoxColumn();
+            col_requests_Resource = new DataGridViewTextBoxColumn();
             col_requests_CreatedAt = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dgv_Requests).BeginInit();
             SuspendLayout();
@@ -46,7 +44,7 @@
             dgv_Requests.AllowUserToDeleteRows = false;
             dgv_Requests.BackgroundColor = SystemColors.ControlLight;
             dgv_Requests.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgv_Requests.Columns.AddRange(new DataGridViewColumn[] { col_requests_Id, col_requests_User, col_requests_Status, col_requests_Type, col_requests_Count, col_requests_Capacity, col_requests_CreatedAt });
+            dgv_Requests.Columns.AddRange(new DataGridViewColumn[] { col_requests_Id, col_requests_User, col_requests_Status, col_requests_Resource, col_requests_CreatedAt });
             dgv_Requests.Dock = DockStyle.Fill;
             dgv_Requests.Location = new Point(0, 0);
             dgv_Requests.Name = "dgv_Requests";
@@ -75,26 +73,12 @@
             col_requests_Status.Name = "col_requests_Status";
             col_requests_Status.ReadOnly = true;
             // 
-            // col_requests_Type
+            // col_requests_Resource
             // 
-            col_requests_Type.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col_requests_Type.HeaderText = "Resource Type";
-            col_requests_Type.Name = "col_requests_Type";
-            col_requests_Type.ReadOnly = true;
-            // 
-            // col_requests_Count
-            // 
-            col_requests_Count.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col_requests_Count.HeaderText = "Count";
-            col_requests_Count.Name = "col_requests_Count";
-            col_requests_Count.ReadOnly = true;
-            // 
-            // col_requests_Capacity
-            // 
-            col_requests_Capacity.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col_requests_Capacity.HeaderText = "Capacity";
-            col_requests_Capacity.Name = "col_requests_Capacity";
-            col_requests_Capacity.ReadOnly = true;
+            col_requests_Resource.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col_requests_Resource.HeaderText = "Resource";
+            col_requests_Resource.Name = "col_requests_Resource";
+            col_requests_Resource.ReadOnly = true;
             // 
             // col_requests_CreatedAt
             // 
@@ -112,6 +96,7 @@
             Name = "FormRequests";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Requests";
+            Load += FormRequests_Load;
             ((System.ComponentModel.ISupportInitialize)dgv_Requests).EndInit();
             ResumeLayout(false);
         }
@@ -122,9 +107,7 @@
         private DataGridViewTextBoxColumn col_requests_Id;
         private DataGridViewTextBoxColumn col_requests_User;
         private DataGridViewTextBoxColumn col_requests_Status;
-        private DataGridViewTextBoxColumn col_requests_Type;
-        private DataGridViewTextBoxColumn col_requests_Count;
-        private DataGridViewTextBoxColumn col_requests_Capacity;
+        private DataGridViewTextBoxColumn col_requests_Resource;
         private DataGridViewTextBoxColumn col_requests_CreatedAt;
     }
 }

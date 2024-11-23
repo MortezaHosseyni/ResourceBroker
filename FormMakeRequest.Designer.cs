@@ -135,6 +135,7 @@
             btn_Request.TabIndex = 10;
             btn_Request.Text = "Request";
             btn_Request.UseVisualStyleBackColor = true;
+            btn_Request.Click += btn_Request_Click;
             // 
             // FormMakeRequest
             // 

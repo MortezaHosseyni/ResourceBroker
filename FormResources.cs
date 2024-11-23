@@ -19,6 +19,8 @@ namespace ResourceBroker
 
         private async void FormResources_Load(object sender, EventArgs e)
         {
+            Text = @$"Resources | {Service.Name}";
+
             await LoadResources();
         }
 
@@ -85,7 +87,7 @@ namespace ResourceBroker
                         ResourceType.Ram => "Ram",
                         ResourceType.Ssd => "Ssd",
                         ResourceType.Hdd => "Hdd",
-                        _ => throw new ArgumentOutOfRangeException()
+                        _ => "Unknown"
                     };
 
                     dgv_Resources.Rows.Add(resource.Id, resource.Name, resource.Description, resourceType, resource.Count, resource.Capacity, resource.CreatedAt);

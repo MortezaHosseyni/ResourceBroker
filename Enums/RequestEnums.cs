@@ -2,8 +2,9 @@
 {
     public enum RequestStatus
     {
-        Allocated = 0,
-        Rejected = 1,
-        SuggestedAnother = 2
+        Pending = 0,
+        Allocated = 1,
+        Rejected = 2,
+        SuggestedAnother = 3
     }
 }
