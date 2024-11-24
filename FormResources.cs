@@ -40,7 +40,6 @@ namespace ResourceBroker
                     Id = Guid.NewGuid(),
                     Name = txt_Name.Text,
                     Description = txt_Description.Text,
-                    Count = !string.IsNullOrEmpty(txt_Count.Text) ? int.Parse(txt_Count.Text) : 0,
                     Capacity = !string.IsNullOrEmpty(txt_Capacity.Text) ? int.Parse(txt_Capacity.Text) : 0,
                     Type = (ResourceType)cmb_ResourceType.SelectedIndex,
                     ServiceId = Service.Id,
@@ -90,7 +89,7 @@ namespace ResourceBroker
                         _ => "Unknown"
                     };
 
-                    dgv_Resources.Rows.Add(resource.Id, resource.Name, resource.Description, resourceType, resource.Count, resource.Capacity, resource.CreatedAt);
+                    dgv_Resources.Rows.Add(resource.Id, resource.Name, resource.Description, resourceType, resource.Capacity, resource.CreatedAt);
                 }
             }
             catch (Exception ex)

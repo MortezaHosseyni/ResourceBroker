@@ -13,7 +13,6 @@ namespace ResourceBroker.Models
 
         public bool IsAllocated { get; set; }
 
-        public int Count { get; set; }
         public int Capacity { get; set; }
 
         [Required] public required Guid ServiceId { get; set; }
