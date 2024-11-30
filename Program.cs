@@ -43,12 +43,14 @@ namespace ResourceBroker
             services.AddTransient<FormUsers>();
             services.AddTransient<FormServices>();
             services.AddTransient<FormResources>();
+            services.AddTransient<FormPackages>();
             services.AddTransient<FormRequests>();
             services.AddTransient<FormMakeRequest>();
             services.AddTransient<FormAllocations>();
 
             services.AddScoped<Gwo>();
             services.AddScoped<ResourceAllocator>();
+            services.AddScoped<ResourcePackageOptimizer>();
         }
     }
 }

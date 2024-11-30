@@ -89,7 +89,6 @@
             // btn_Packages
             // 
             btn_Packages.Anchor = AnchorStyles.Left;
-            btn_Packages.Enabled = false;
             btn_Packages.Location = new Point(12, 330);
             btn_Packages.Name = "btn_Packages";
             btn_Packages.Size = new Size(412, 44);
@@ -97,6 +96,7 @@
             btn_Packages.Text = "Packages";
             tlt_Hints.SetToolTip(btn_Packages, "Ready-made packages");
             btn_Packages.UseVisualStyleBackColor = true;
+            btn_Packages.Click += btn_Packages_Click;
             // 
             // btn_Requests
             // 

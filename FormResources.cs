@@ -64,7 +64,6 @@ namespace ResourceBroker
         {
             txt_Name.Text = string.Empty;
             txt_Description.Text = string.Empty;
-            txt_Count.Text = string.Empty;
             txt_Capacity.Text = string.Empty;
             cmb_ResourceType.Text = string.Empty;
         }

@@ -10,6 +10,7 @@ namespace ResourceBroker.Context
         public DbSet<Allocate> Allocates { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<Resource> Resources { get; set; }
+        public DbSet<Package> Packages { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
