@@ -15,8 +15,7 @@ namespace ResourceBroker.Migrations
                 name: "PackageId",
                 table: "Resources",
                 type: "TEXT",
-                nullable: false,
-                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
+                nullable: true);
 
             migrationBuilder.CreateTable(
                 name: "Packages",
@@ -45,8 +44,7 @@ namespace ResourceBroker.Migrations
                 table: "Resources",
                 column: "PackageId",
                 principalTable: "Packages",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "Id");
         }
 
         /// <inheritdoc />

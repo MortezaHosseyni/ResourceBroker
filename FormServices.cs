@@ -8,13 +8,15 @@ namespace ResourceBroker
     public partial class FormServices : Form
     {
         private readonly IServiceRepository _service;
+        private readonly IResourceRepository _resource;
         private readonly IServiceProvider _serviceProvider;
 
-        public FormServices(IServiceRepository service, IServiceProvider serviceProvider)
+        public FormServices(IServiceRepository service, IResourceRepository resource, IServiceProvider serviceProvider)
         {
             InitializeComponent();
 
             _service = service;
+            _resource = resource;
             _serviceProvider = serviceProvider;
         }
 
@@ -92,11 +94,12 @@ namespace ResourceBroker
             {
                 dgv_Services.Rows.Clear();
 
-                var services = await _service.GetAllIncludeAsync(x => x.Resources);
+                var services = await _service.GetAllAsync();
 
                 foreach (var service in services)
                 {
-                    dgv_Services.Rows.Add(service.Id, service.Name, service.Description, service.Download, service.Upload, service.Bandwidth, service.Resources?.Count, service.CreatedAt);
+                    var resourcesCount = await _resource.CountAsync(r => r.ServiceId == service.Id);
+                    dgv_Services.Rows.Add(service.Id, service.Name, service.Description, service.Download, service.Upload, service.Bandwidth, resourcesCount, service.CreatedAt);
                 }
             }
             catch (Exception ex)

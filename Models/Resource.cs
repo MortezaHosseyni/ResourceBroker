@@ -21,7 +21,7 @@ namespace ResourceBroker.Models
         public Guid? AllocateId { get; set; }
         [ForeignKey(nameof(AllocateId))] public virtual Allocate? Allocate { get; set; }
 
-        [Required] public Guid? PackageId { get; set; }
+        public Guid? PackageId { get; set; }
         [ForeignKey(nameof(PackageId))] public virtual Package? Package { get; set; }
 
         public virtual ICollection<Request>? Requests { get; set; }

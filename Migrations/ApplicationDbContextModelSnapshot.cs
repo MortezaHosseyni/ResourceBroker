@@ -41,7 +41,7 @@ namespace ResourceBroker.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Allocates");
+                    b.ToTable("Allocates", (string)null);
                 });
 
             modelBuilder.Entity("ResourceBroker.Models.Package", b =>
@@ -72,7 +72,7 @@ namespace ResourceBroker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Packages");
+                    b.ToTable("Packages", (string)null);
                 });
 
             modelBuilder.Entity("ResourceBroker.Models.Request", b =>
@@ -102,7 +102,7 @@ namespace ResourceBroker.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Requests");
+                    b.ToTable("Requests", (string)null);
                 });
 
             modelBuilder.Entity("ResourceBroker.Models.Resource", b =>
@@ -133,7 +133,6 @@ namespace ResourceBroker.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<Guid?>("PackageId")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("ServiceId")
@@ -153,7 +152,7 @@ namespace ResourceBroker.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("Resources");
+                    b.ToTable("Resources", (string)null);
                 });
 
             modelBuilder.Entity("ResourceBroker.Models.Service", b =>
@@ -188,7 +187,7 @@ namespace ResourceBroker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Services");
+                    b.ToTable("Services", (string)null);
                 });
 
             modelBuilder.Entity("ResourceBroker.Models.User", b =>
@@ -223,7 +222,7 @@ namespace ResourceBroker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("ResourceBroker.Models.Allocate", b =>
@@ -272,9 +271,7 @@ namespace ResourceBroker.Migrations
 
                     b.HasOne("ResourceBroker.Models.Package", "Package")
                         .WithMany("Resources")
-                        .HasForeignKey("PackageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PackageId");
 
                     b.HasOne("ResourceBroker.Models.Service", "Service")
                         .WithMany("Resources")

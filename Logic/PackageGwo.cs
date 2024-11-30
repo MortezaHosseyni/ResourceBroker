@@ -1,0 +1,242 @@
+﻿using ResourceBroker.Enums;
+using ResourceBroker.Models;
+
+namespace ResourceBroker.Logic
+{
+    public class PackageGwo
+    {
+        private const int PopulationSize = 50;
+        private const int MaxIterations = 200;
+        private const int RequiredResourceTypes = 5; // Cpu, Gpu, Ram, Ssd, Hdd
+
+        public List<Package> CreatePackages(List<Resource> availableResources)
+        {
+            var packages = new List<Package>();
+
+            // Filter only unallocated resources
+            var unallocatedResources = availableResources
+                .Where(r => r.PackageId == null)
+                .ToList();
+
+            // Group resources by type
+            var resourcesByType = unallocatedResources
+                .GroupBy(r => r.Type)
+                .ToDictionary(g => g.Key, g => g.ToList());
+
+            if (!ValidateResourceAvailability(resourcesByType))
+                return packages;
+
+            // Initialize and optimize wolves
+            var wolves = InitializeWolfPopulation(resourcesByType);
+
+            for (var iteration = 0; iteration < MaxIterations; iteration++)
+            {
+                var rankedWolves = RankWolves(wolves);
+                var alpha = rankedWolves[0];
+                var beta = rankedWolves[1];
+                var delta = rankedWolves[2];
+                UpdateWolfPositions(wolves, alpha, beta, delta, iteration);
+            }
+
+            // Select best packages, ensuring resources are not reused
+            return SelectBestPackages(wolves, unallocatedResources);
+        }
+
+        private static List<Wolf> InitializeWolfPopulation(Dictionary<ResourceType, List<Resource>> resourcesByType)
+        {
+            var wolves = new List<Wolf>();
+            var random = new Random();
+
+            for (var i = 0; i < PopulationSize; i++)
+            {
+                var packageResources = new Dictionary<ResourceType, Resource>();
+
+                foreach (var resourceType in Enum.GetValues(typeof(ResourceType)).Cast<ResourceType>())
+                {
+                    if (!resourcesByType.TryGetValue(resourceType, out var typeResources)) continue;
+                    var unallocatedTypeResources = typeResources.Where(r => r.PackageId == null).ToList();
+                    if (unallocatedTypeResources.Any())
+                    {
+                        packageResources[resourceType] = unallocatedTypeResources[random.Next(unallocatedTypeResources.Count)];
+                    }
+                }
+
+                if (packageResources.Count == RequiredResourceTypes)
+                {
+                    wolves.Add(new Wolf
+                    {
+                        Resources = packageResources,
+                        Fitness = 0
+                    });
+                }
+            }
+
+            return wolves;
+        }
+
+        private static List<Wolf> RankWolves(List<Wolf> wolves)
+        {
+            // Calculate fitness for each wolf (package)
+            foreach (var wolf in wolves)
+            {
+                wolf.Fitness = CalculateFitness(wolf);
+            }
+
+            // Sort wolves by fitness in descending order
+            return wolves
+                .OrderByDescending(w => w.Fitness)
+                .ToList();
+        }
+
+        private static void UpdateWolfPositions(
+            List<Wolf> wolves,
+            Wolf alpha,
+            Wolf beta,
+            Wolf delta,
+            int iteration)
+        {
+            var a = 2 * (1 - iteration / (double)MaxIterations);
+
+            foreach (var wolf in wolves)
+            {
+                // Skip the best wolves
+                if (wolf == alpha || wolf == beta || wolf == delta)
+                    continue;
+
+                var random = new Random();
+
+                // Compute A and C vectors
+                var A = new double[3];
+                var C = new double[3];
+                for (var i = 0; i < 3; i++)
+                {
+                    A[i] = 2 * a * random.NextDouble() - a;
+                    C[i] = 2 * random.NextDouble();
+                }
+
+                // Update wolf's resources based on top three wolves
+                wolf.UpdateResourcePositions(A, C, alpha, beta, delta);
+            }
+        }
+
+        private static double CalculateFitness(Wolf wolf)
+        {
+            var diversityScore = wolf.Resources.Keys.Count == RequiredResourceTypes ? 1.0 : 0.0;
+
+            var availabilityScore = wolf.Resources.Values
+                .Count(r => !r.IsAllocated) / (double)RequiredResourceTypes;
+
+            var serviceConsistencyScore = wolf.Resources.Values
+                .Select(r => r.Service?.Id)
+                .Distinct()
+                .Count() == 1 ? 1.0 : 0.5;
+
+            // performance metrics
+            var performanceScore = wolf.Resources.Values.Sum(r => r.Capacity) / 100.0;
+
+            // Weighted average to adjust the impact of each component
+            return 0.4 * diversityScore +
+                   0.3 * availabilityScore +
+                   0.2 * serviceConsistencyScore +
+                   0.1 * performanceScore;
+        }
+
+
+        private static List<Package> SelectBestPackages(List<Wolf> wolves, List<Resource> unallocatedResources)
+        {
+            var selectedPackages = new List<Package>();
+
+            foreach (var wolf in wolves.OrderByDescending(w => w.Fitness))
+            {
+                var resourcesForPackage = wolf.Resources.Values
+                    .Where(unallocatedResources.Contains) // Ensure resources are unallocated
+                    .ToList();
+
+                if (resourcesForPackage.Count != RequiredResourceTypes) continue;
+                selectedPackages.Add(new Package
+                {
+                    Id = Guid.NewGuid(),
+                    Title = $"Package #{DateTime.Now:yyyyMMdd-HHmmss}",
+                    Description = "Optimized multi-resource package",
+                    QosScore = wolf.Fitness,
+                    IsQosCompliant = wolf.Fitness >= 0.75,
+                    Resources = resourcesForPackage,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                });
+
+                // Mark resources as allocated
+                foreach (var resource in resourcesForPackage)
+                {
+                    resource.PackageId = selectedPackages.Last().Id;
+                    unallocatedResources.Remove(resource); // Remove from unallocated list
+                }
+            }
+
+            return selectedPackages;
+        }
+
+
+        private static bool ValidateResourceAvailability(Dictionary<ResourceType, List<Resource>> resourcesByType)
+        {
+            return Enum.GetValues(typeof(ResourceType))
+                .Cast<ResourceType>()
+                .All(type =>
+                    resourcesByType.ContainsKey(type) &&
+                    resourcesByType[type].Count >= 1
+                );
+        }
+
+        // Wolf class to represent package candidates
+        private class Wolf
+        {
+            public Dictionary<ResourceType, Resource> Resources { get; init; }
+            public double Fitness { get; set; }
+
+            public void UpdateResourcePositions(
+                double[] A,
+                double[] C,
+                Wolf alpha,
+                Wolf beta,
+                Wolf delta)
+            {
+                // Update resources based on top wolves
+                foreach (var resourceType in Enum.GetValues(typeof(ResourceType)).Cast<ResourceType>())
+                {
+                    var candidates = new[]
+                    {
+                    alpha.Resources[resourceType],
+                    beta.Resources[resourceType],
+                    delta.Resources[resourceType]
+                };
+
+                    // Simple selection strategy
+                    var bestIndex = FindBestResourceIndex(candidates, A, C);
+                    Resources[resourceType] = candidates[bestIndex];
+                }
+            }
+
+            private static int FindBestResourceIndex(Resource[] candidates, double[] A, double[] C)
+            {
+                var scores = new double[candidates.Length];
+
+                for (var i = 0; i < candidates.Length; i++)
+                {
+                    // Compute a score based on A, C vectors and resource characteristics
+                    scores[i] = ComputeResourceScore(candidates[i], A[i], C[i]);
+                }
+
+                return Array.IndexOf(scores, scores.Max());
+            }
+
+            private static double ComputeResourceScore(Resource resource, double a, double c)
+            {
+                // Compute a score based on resource properties
+                var serviceScore = resource.Service?.Id.GetHashCode() * c ?? 0;
+                var availabilityScore = resource.IsAllocated ? 0.2 : 1.0;
+
+                return serviceScore * availabilityScore * (1 - a);
+            }
+        }
+    }
+}

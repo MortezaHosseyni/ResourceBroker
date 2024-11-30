@@ -29,20 +29,39 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPackages));
+            lsv_PackagesList = new ListView();
             SuspendLayout();
+            // 
+            // lsv_PackagesList
+            // 
+            lsv_PackagesList.Dock = DockStyle.Fill;
+            lsv_PackagesList.Font = new Font("Segoe UI", 18F);
+            lsv_PackagesList.Location = new Point(0, 0);
+            lsv_PackagesList.MultiSelect = false;
+            lsv_PackagesList.Name = "lsv_PackagesList";
+            lsv_PackagesList.Size = new Size(893, 542);
+            lsv_PackagesList.TabIndex = 0;
+            lsv_PackagesList.UseCompatibleStateImageBehavior = false;
+            lsv_PackagesList.MouseDoubleClick += lsv_PackagesList_MouseDoubleClick;
             // 
             // FormPackages
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(893, 542);
+            Controls.Add(lsv_PackagesList);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MinimumSize = new Size(909, 581);
             Name = "FormPackages";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Packages";
+            WindowState = FormWindowState.Maximized;
+            Load += FormPackages_Load;
             ResumeLayout(false);
         }
 
         #endregion
+
+        private ListView lsv_PackagesList;
     }
 }

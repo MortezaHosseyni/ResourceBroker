@@ -35,6 +35,7 @@ namespace ResourceBroker
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IServiceRepository, ServiceRepository>();
             services.AddScoped<IResourceRepository, ResourceRepository>();
+            services.AddScoped<IPackageRepository, PackageRepository>();
             services.AddScoped<IRequestRepository, RequestRepository>();
             services.AddScoped<IAllocateRepository, AllocateRepository>();
 
@@ -50,7 +51,7 @@ namespace ResourceBroker
 
             services.AddScoped<Gwo>();
             services.AddScoped<ResourceAllocator>();
-            services.AddScoped<ResourcePackageOptimizer>();
+            services.AddScoped<PackageGwo>();
         }
     }
 }

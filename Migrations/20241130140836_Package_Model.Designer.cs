@@ -11,7 +11,7 @@ using ResourceBroker.Context;
 namespace ResourceBroker.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241130130540_Package_Model")]
+    [Migration("20241130140836_Package_Model")]
     partial class Package_Model
     {
         /// <inheritdoc />
@@ -136,7 +136,6 @@ namespace ResourceBroker.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<Guid?>("PackageId")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("ServiceId")
@@ -275,9 +274,7 @@ namespace ResourceBroker.Migrations
 
                     b.HasOne("ResourceBroker.Models.Package", "Package")
                         .WithMany("Resources")
-                        .HasForeignKey("PackageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PackageId");
 
                     b.HasOne("ResourceBroker.Models.Service", "Service")
                         .WithMany("Resources")

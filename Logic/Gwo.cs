@@ -114,7 +114,7 @@ namespace ResourceBroker.Logic
         private static double CalculateFitness(Wolf wolf, Request request)
         {
             // Fitness evaluation considers multiple factors
-            var serviceSimilarity = wolf.Resource.Service.Id == request.Resource.Service.Id
+            var serviceSimilarity = wolf.Resource.ServiceId == request.Resource.ServiceId
                 ? 1.0 : 0.5;
 
             var availabilityFactor = wolf.Resource.IsAllocated ? 0.2 : 1.0;
