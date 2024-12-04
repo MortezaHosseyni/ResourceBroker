@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPackages));
             lsv_PackagesList = new ListView();
+            btn_AddPackage = new Button();
             SuspendLayout();
             // 
             // lsv_PackagesList
@@ -44,11 +45,23 @@
             lsv_PackagesList.UseCompatibleStateImageBehavior = false;
             lsv_PackagesList.MouseDoubleClick += lsv_PackagesList_MouseDoubleClick;
             // 
+            // btn_AddPackage
+            // 
+            btn_AddPackage.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btn_AddPackage.Location = new Point(825, 486);
+            btn_AddPackage.Name = "btn_AddPackage";
+            btn_AddPackage.Size = new Size(62, 50);
+            btn_AddPackage.TabIndex = 1;
+            btn_AddPackage.Text = "➕";
+            btn_AddPackage.UseVisualStyleBackColor = true;
+            btn_AddPackage.Click += btn_AddPackage_Click;
+            // 
             // FormPackages
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(893, 542);
+            Controls.Add(btn_AddPackage);
             Controls.Add(lsv_PackagesList);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(909, 581);
@@ -63,5 +76,6 @@
         #endregion
 
         private ListView lsv_PackagesList;
+        private Button btn_AddPackage;
     }
 }

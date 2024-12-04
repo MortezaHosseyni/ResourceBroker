@@ -31,6 +31,14 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormServices));
             dgv_Services = new DataGridView();
+            col_services_Id = new DataGridViewTextBoxColumn();
+            col_services_Name = new DataGridViewTextBoxColumn();
+            col_services_Description = new DataGridViewTextBoxColumn();
+            col_services_Download = new DataGridViewTextBoxColumn();
+            col_services_Upload = new DataGridViewTextBoxColumn();
+            col_services_Bandwidth = new DataGridViewTextBoxColumn();
+            col_services_Resources = new DataGridViewTextBoxColumn();
+            col_services_CreatedAt = new DataGridViewTextBoxColumn();
             cms_ServicesTable = new ContextMenuStrip(components);
             btn_EditService = new ToolStripMenuItem();
             btn_DeleteService = new ToolStripMenuItem();
@@ -48,14 +56,6 @@
             lbl_Description = new Label();
             txt_Name = new TextBox();
             lbl_Name = new Label();
-            col_services_Id = new DataGridViewTextBoxColumn();
-            col_services_Name = new DataGridViewTextBoxColumn();
-            col_services_Description = new DataGridViewTextBoxColumn();
-            col_services_Download = new DataGridViewTextBoxColumn();
-            col_services_Upload = new DataGridViewTextBoxColumn();
-            col_services_Bandwidth = new DataGridViewTextBoxColumn();
-            col_services_Resources = new DataGridViewTextBoxColumn();
-            col_services_CreatedAt = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dgv_Services).BeginInit();
             cms_ServicesTable.SuspendLayout();
             pnl_AddService.SuspendLayout();
@@ -75,6 +75,62 @@
             dgv_Services.ReadOnly = true;
             dgv_Services.Size = new Size(847, 387);
             dgv_Services.TabIndex = 0;
+            // 
+            // col_services_Id
+            // 
+            col_services_Id.HeaderText = "Id";
+            col_services_Id.Name = "col_services_Id";
+            col_services_Id.ReadOnly = true;
+            col_services_Id.Visible = false;
+            // 
+            // col_services_Name
+            // 
+            col_services_Name.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col_services_Name.HeaderText = "Name";
+            col_services_Name.Name = "col_services_Name";
+            col_services_Name.ReadOnly = true;
+            // 
+            // col_services_Description
+            // 
+            col_services_Description.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col_services_Description.HeaderText = "Description";
+            col_services_Description.Name = "col_services_Description";
+            col_services_Description.ReadOnly = true;
+            // 
+            // col_services_Download
+            // 
+            col_services_Download.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col_services_Download.HeaderText = "Download";
+            col_services_Download.Name = "col_services_Download";
+            col_services_Download.ReadOnly = true;
+            // 
+            // col_services_Upload
+            // 
+            col_services_Upload.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col_services_Upload.HeaderText = "Upload";
+            col_services_Upload.Name = "col_services_Upload";
+            col_services_Upload.ReadOnly = true;
+            // 
+            // col_services_Bandwidth
+            // 
+            col_services_Bandwidth.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col_services_Bandwidth.HeaderText = "Bandwidth";
+            col_services_Bandwidth.Name = "col_services_Bandwidth";
+            col_services_Bandwidth.ReadOnly = true;
+            // 
+            // col_services_Resources
+            // 
+            col_services_Resources.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col_services_Resources.HeaderText = "Resources";
+            col_services_Resources.Name = "col_services_Resources";
+            col_services_Resources.ReadOnly = true;
+            // 
+            // col_services_CreatedAt
+            // 
+            col_services_CreatedAt.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col_services_CreatedAt.HeaderText = "Added Date";
+            col_services_CreatedAt.Name = "col_services_CreatedAt";
+            col_services_CreatedAt.ReadOnly = true;
             // 
             // cms_ServicesTable
             // 
@@ -228,62 +284,6 @@
             lbl_Name.TabIndex = 0;
             lbl_Name.Text = "Name";
             // 
-            // col_services_Id
-            // 
-            col_services_Id.HeaderText = "Id";
-            col_services_Id.Name = "col_services_Id";
-            col_services_Id.ReadOnly = true;
-            col_services_Id.Visible = false;
-            // 
-            // col_services_Name
-            // 
-            col_services_Name.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col_services_Name.HeaderText = "Name";
-            col_services_Name.Name = "col_services_Name";
-            col_services_Name.ReadOnly = true;
-            // 
-            // col_services_Description
-            // 
-            col_services_Description.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col_services_Description.HeaderText = "Description";
-            col_services_Description.Name = "col_services_Description";
-            col_services_Description.ReadOnly = true;
-            // 
-            // col_services_Download
-            // 
-            col_services_Download.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col_services_Download.HeaderText = "Download";
-            col_services_Download.Name = "col_services_Download";
-            col_services_Download.ReadOnly = true;
-            // 
-            // col_services_Upload
-            // 
-            col_services_Upload.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col_services_Upload.HeaderText = "Upload";
-            col_services_Upload.Name = "col_services_Upload";
-            col_services_Upload.ReadOnly = true;
-            // 
-            // col_services_Bandwidth
-            // 
-            col_services_Bandwidth.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col_services_Bandwidth.HeaderText = "Bandwidth";
-            col_services_Bandwidth.Name = "col_services_Bandwidth";
-            col_services_Bandwidth.ReadOnly = true;
-            // 
-            // col_services_Resources
-            // 
-            col_services_Resources.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col_services_Resources.HeaderText = "Resources";
-            col_services_Resources.Name = "col_services_Resources";
-            col_services_Resources.ReadOnly = true;
-            // 
-            // col_services_CreatedAt
-            // 
-            col_services_CreatedAt.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col_services_CreatedAt.HeaderText = "Added Date";
-            col_services_CreatedAt.Name = "col_services_CreatedAt";
-            col_services_CreatedAt.ReadOnly = true;
-            // 
             // FormServices
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -296,6 +296,7 @@
             Name = "FormServices";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Services";
+            WindowState = FormWindowState.Maximized;
             Load += FormServices_Load;
             ((System.ComponentModel.ISupportInitialize)dgv_Services).EndInit();
             cms_ServicesTable.ResumeLayout(false);

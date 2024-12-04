@@ -14,6 +14,8 @@ namespace ResourceBroker.Models
         public bool IsAllocated { get; set; }
 
         public int Capacity { get; set; }
+        public double Cost { get; set; }
+        public double ResponseTime { get; set; }
 
         [Required] public required Guid ServiceId { get; set; }
         [ForeignKey(nameof(ServiceId))] public virtual Service? Service { get; set; }

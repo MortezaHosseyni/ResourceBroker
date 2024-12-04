@@ -31,6 +31,14 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormUsers));
             dgv_Users = new DataGridView();
+            col_users_Id = new DataGridViewTextBoxColumn();
+            col_users_FirstName = new DataGridViewTextBoxColumn();
+            col_users_LastName = new DataGridViewTextBoxColumn();
+            col_users_Phone = new DataGridViewTextBoxColumn();
+            col_users_Email = new DataGridViewTextBoxColumn();
+            col_users_Requests = new DataGridViewTextBoxColumn();
+            col_users_Allocates = new DataGridViewTextBoxColumn();
+            col_users_CreatedAt = new DataGridViewTextBoxColumn();
             cms_UsersTable = new ContextMenuStrip(components);
             btn_EditUser = new ToolStripMenuItem();
             btn_DeleteUser = new ToolStripMenuItem();
@@ -46,14 +54,6 @@
             txt_LastName = new TextBox();
             lbl_FirstName = new Label();
             txt_FirstName = new TextBox();
-            col_users_Id = new DataGridViewTextBoxColumn();
-            col_users_FirstName = new DataGridViewTextBoxColumn();
-            col_users_LastName = new DataGridViewTextBoxColumn();
-            col_users_Phone = new DataGridViewTextBoxColumn();
-            col_users_Email = new DataGridViewTextBoxColumn();
-            col_users_Requests = new DataGridViewTextBoxColumn();
-            col_users_Allocates = new DataGridViewTextBoxColumn();
-            col_users_CreatedAt = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dgv_Users).BeginInit();
             cms_UsersTable.SuspendLayout();
             pnl_RegisterUser.SuspendLayout();
@@ -73,6 +73,62 @@
             dgv_Users.ReadOnly = true;
             dgv_Users.Size = new Size(864, 400);
             dgv_Users.TabIndex = 0;
+            // 
+            // col_users_Id
+            // 
+            col_users_Id.HeaderText = "Id";
+            col_users_Id.Name = "col_users_Id";
+            col_users_Id.ReadOnly = true;
+            col_users_Id.Visible = false;
+            // 
+            // col_users_FirstName
+            // 
+            col_users_FirstName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col_users_FirstName.HeaderText = "First Name";
+            col_users_FirstName.Name = "col_users_FirstName";
+            col_users_FirstName.ReadOnly = true;
+            // 
+            // col_users_LastName
+            // 
+            col_users_LastName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col_users_LastName.HeaderText = "Last Name";
+            col_users_LastName.Name = "col_users_LastName";
+            col_users_LastName.ReadOnly = true;
+            // 
+            // col_users_Phone
+            // 
+            col_users_Phone.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col_users_Phone.HeaderText = "Phone";
+            col_users_Phone.Name = "col_users_Phone";
+            col_users_Phone.ReadOnly = true;
+            // 
+            // col_users_Email
+            // 
+            col_users_Email.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col_users_Email.HeaderText = "Email";
+            col_users_Email.Name = "col_users_Email";
+            col_users_Email.ReadOnly = true;
+            // 
+            // col_users_Requests
+            // 
+            col_users_Requests.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col_users_Requests.HeaderText = "Requests";
+            col_users_Requests.Name = "col_users_Requests";
+            col_users_Requests.ReadOnly = true;
+            // 
+            // col_users_Allocates
+            // 
+            col_users_Allocates.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col_users_Allocates.HeaderText = "Allocations";
+            col_users_Allocates.Name = "col_users_Allocates";
+            col_users_Allocates.ReadOnly = true;
+            // 
+            // col_users_CreatedAt
+            // 
+            col_users_CreatedAt.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col_users_CreatedAt.HeaderText = "Registered Date";
+            col_users_CreatedAt.Name = "col_users_CreatedAt";
+            col_users_CreatedAt.ReadOnly = true;
             // 
             // cms_UsersTable
             // 
@@ -205,62 +261,6 @@
             txt_FirstName.Size = new Size(189, 23);
             txt_FirstName.TabIndex = 0;
             // 
-            // col_users_Id
-            // 
-            col_users_Id.HeaderText = "Id";
-            col_users_Id.Name = "col_users_Id";
-            col_users_Id.ReadOnly = true;
-            col_users_Id.Visible = false;
-            // 
-            // col_users_FirstName
-            // 
-            col_users_FirstName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col_users_FirstName.HeaderText = "First Name";
-            col_users_FirstName.Name = "col_users_FirstName";
-            col_users_FirstName.ReadOnly = true;
-            // 
-            // col_users_LastName
-            // 
-            col_users_LastName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col_users_LastName.HeaderText = "Last Name";
-            col_users_LastName.Name = "col_users_LastName";
-            col_users_LastName.ReadOnly = true;
-            // 
-            // col_users_Phone
-            // 
-            col_users_Phone.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col_users_Phone.HeaderText = "Phone";
-            col_users_Phone.Name = "col_users_Phone";
-            col_users_Phone.ReadOnly = true;
-            // 
-            // col_users_Email
-            // 
-            col_users_Email.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col_users_Email.HeaderText = "Email";
-            col_users_Email.Name = "col_users_Email";
-            col_users_Email.ReadOnly = true;
-            // 
-            // col_users_Requests
-            // 
-            col_users_Requests.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col_users_Requests.HeaderText = "Requests";
-            col_users_Requests.Name = "col_users_Requests";
-            col_users_Requests.ReadOnly = true;
-            // 
-            // col_users_Allocates
-            // 
-            col_users_Allocates.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col_users_Allocates.HeaderText = "Allocations";
-            col_users_Allocates.Name = "col_users_Allocates";
-            col_users_Allocates.ReadOnly = true;
-            // 
-            // col_users_CreatedAt
-            // 
-            col_users_CreatedAt.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col_users_CreatedAt.HeaderText = "Registered Date";
-            col_users_CreatedAt.Name = "col_users_CreatedAt";
-            col_users_CreatedAt.ReadOnly = true;
-            // 
             // FormUsers
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -273,6 +273,7 @@
             Name = "FormUsers";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Users";
+            WindowState = FormWindowState.Maximized;
             Load += FormUsers_Load;
             ((System.ComponentModel.ISupportInitialize)dgv_Users).EndInit();
             cms_UsersTable.ResumeLayout(false);

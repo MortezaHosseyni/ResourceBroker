@@ -89,6 +89,7 @@
             Name = "FormAllocations";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Allocations";
+            WindowState = FormWindowState.Maximized;
             Load += FormAllocations_Load;
             ((System.ComponentModel.ISupportInitialize)dgv_Allocations).EndInit();
             ResumeLayout(false);

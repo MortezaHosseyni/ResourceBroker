@@ -31,15 +31,11 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormResources));
             dgv_Resources = new DataGridView();
-            col_resources_Id = new DataGridViewTextBoxColumn();
-            col_resources_Name = new DataGridViewTextBoxColumn();
-            col_resources_Description = new DataGridViewTextBoxColumn();
-            col_resources_Type = new DataGridViewTextBoxColumn();
-            col_resources_Capacity = new DataGridViewTextBoxColumn();
-            col_resources_CreatedAt = new DataGridViewTextBoxColumn();
             cms_ResourcesTable = new ContextMenuStrip(components);
             btn_EditResource = new ToolStripMenuItem();
             btn_DeleteResource = new ToolStripMenuItem();
+            toolStripMenuItem1 = new ToolStripSeparator();
+            btn_CalculateCriteria = new ToolStripMenuItem();
             pnl_AddResource = new Panel();
             btn_AddResource = new Button();
             txt_Capacity = new TextBox();
@@ -50,6 +46,15 @@
             lbl_Description = new Label();
             txt_Name = new TextBox();
             lbl_Name = new Label();
+            col_resources_Id = new DataGridViewTextBoxColumn();
+            col_resources_Name = new DataGridViewTextBoxColumn();
+            col_resources_Description = new DataGridViewTextBoxColumn();
+            col_resources_Type = new DataGridViewTextBoxColumn();
+            col_resources_Capacity = new DataGridViewTextBoxColumn();
+            col_resources_ResponseTime = new DataGridViewTextBoxColumn();
+            col_resources_Cost = new DataGridViewTextBoxColumn();
+            col_resources_CreatedAt = new DataGridViewTextBoxColumn();
+            col_resources_ServiceId = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dgv_Resources).BeginInit();
             cms_ResourcesTable.SuspendLayout();
             pnl_AddResource.SuspendLayout();
@@ -62,7 +67,7 @@
             dgv_Resources.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgv_Resources.BackgroundColor = SystemColors.ControlLight;
             dgv_Resources.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgv_Resources.Columns.AddRange(new DataGridViewColumn[] { col_resources_Id, col_resources_Name, col_resources_Description, col_resources_Type, col_resources_Capacity, col_resources_CreatedAt });
+            dgv_Resources.Columns.AddRange(new DataGridViewColumn[] { col_resources_Id, col_resources_Name, col_resources_Description, col_resources_Type, col_resources_Capacity, col_resources_ResponseTime, col_resources_Cost, col_resources_CreatedAt, col_resources_ServiceId });
             dgv_Resources.ContextMenuStrip = cms_ResourcesTable;
             dgv_Resources.Location = new Point(12, 12);
             dgv_Resources.Name = "dgv_Resources";
@@ -71,74 +76,37 @@
             dgv_Resources.Size = new Size(776, 378);
             dgv_Resources.TabIndex = 0;
             // 
-            // col_resources_Id
-            // 
-            col_resources_Id.HeaderText = "Id";
-            col_resources_Id.MinimumWidth = 6;
-            col_resources_Id.Name = "col_resources_Id";
-            col_resources_Id.ReadOnly = true;
-            col_resources_Id.Visible = false;
-            col_resources_Id.Width = 125;
-            // 
-            // col_resources_Name
-            // 
-            col_resources_Name.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col_resources_Name.HeaderText = "Name";
-            col_resources_Name.MinimumWidth = 6;
-            col_resources_Name.Name = "col_resources_Name";
-            col_resources_Name.ReadOnly = true;
-            // 
-            // col_resources_Description
-            // 
-            col_resources_Description.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col_resources_Description.HeaderText = "Description";
-            col_resources_Description.MinimumWidth = 6;
-            col_resources_Description.Name = "col_resources_Description";
-            col_resources_Description.ReadOnly = true;
-            // 
-            // col_resources_Type
-            // 
-            col_resources_Type.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col_resources_Type.HeaderText = "Resource Type";
-            col_resources_Type.MinimumWidth = 6;
-            col_resources_Type.Name = "col_resources_Type";
-            col_resources_Type.ReadOnly = true;
-            // 
-            // col_resources_Capacity
-            // 
-            col_resources_Capacity.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col_resources_Capacity.HeaderText = "Capacity";
-            col_resources_Capacity.MinimumWidth = 6;
-            col_resources_Capacity.Name = "col_resources_Capacity";
-            col_resources_Capacity.ReadOnly = true;
-            // 
-            // col_resources_CreatedAt
-            // 
-            col_resources_CreatedAt.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col_resources_CreatedAt.HeaderText = "Added Date";
-            col_resources_CreatedAt.MinimumWidth = 6;
-            col_resources_CreatedAt.Name = "col_resources_CreatedAt";
-            col_resources_CreatedAt.ReadOnly = true;
-            // 
             // cms_ResourcesTable
             // 
             cms_ResourcesTable.ImageScalingSize = new Size(20, 20);
-            cms_ResourcesTable.Items.AddRange(new ToolStripItem[] { btn_EditResource, btn_DeleteResource });
+            cms_ResourcesTable.Items.AddRange(new ToolStripItem[] { btn_EditResource, btn_DeleteResource, toolStripMenuItem1, btn_CalculateCriteria });
             cms_ResourcesTable.Name = "cms_ResourcesTable";
-            cms_ResourcesTable.Size = new Size(108, 48);
+            cms_ResourcesTable.Size = new Size(165, 76);
             // 
             // btn_EditResource
             // 
             btn_EditResource.Name = "btn_EditResource";
-            btn_EditResource.Size = new Size(107, 22);
+            btn_EditResource.Size = new Size(164, 22);
             btn_EditResource.Text = "Edit";
             // 
             // btn_DeleteResource
             // 
             btn_DeleteResource.BackColor = Color.FromArgb(255, 192, 192);
             btn_DeleteResource.Name = "btn_DeleteResource";
-            btn_DeleteResource.Size = new Size(107, 22);
+            btn_DeleteResource.Size = new Size(164, 22);
             btn_DeleteResource.Text = "Delete";
+            // 
+            // toolStripMenuItem1
+            // 
+            toolStripMenuItem1.Name = "toolStripMenuItem1";
+            toolStripMenuItem1.Size = new Size(161, 6);
+            // 
+            // btn_CalculateCriteria
+            // 
+            btn_CalculateCriteria.Name = "btn_CalculateCriteria";
+            btn_CalculateCriteria.Size = new Size(164, 22);
+            btn_CalculateCriteria.Text = "Calculate Criteria";
+            btn_CalculateCriteria.Click += btn_CalculateCriteria_Click;
             // 
             // pnl_AddResource
             // 
@@ -243,6 +211,74 @@
             lbl_Name.TabIndex = 4;
             lbl_Name.Text = "Name";
             // 
+            // col_resources_Id
+            // 
+            col_resources_Id.HeaderText = "Id";
+            col_resources_Id.MinimumWidth = 6;
+            col_resources_Id.Name = "col_resources_Id";
+            col_resources_Id.ReadOnly = true;
+            col_resources_Id.Visible = false;
+            col_resources_Id.Width = 125;
+            // 
+            // col_resources_Name
+            // 
+            col_resources_Name.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col_resources_Name.HeaderText = "Name";
+            col_resources_Name.MinimumWidth = 6;
+            col_resources_Name.Name = "col_resources_Name";
+            col_resources_Name.ReadOnly = true;
+            // 
+            // col_resources_Description
+            // 
+            col_resources_Description.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col_resources_Description.HeaderText = "Description";
+            col_resources_Description.MinimumWidth = 6;
+            col_resources_Description.Name = "col_resources_Description";
+            col_resources_Description.ReadOnly = true;
+            // 
+            // col_resources_Type
+            // 
+            col_resources_Type.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col_resources_Type.HeaderText = "Resource Type";
+            col_resources_Type.MinimumWidth = 6;
+            col_resources_Type.Name = "col_resources_Type";
+            col_resources_Type.ReadOnly = true;
+            // 
+            // col_resources_Capacity
+            // 
+            col_resources_Capacity.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col_resources_Capacity.HeaderText = "Capacity";
+            col_resources_Capacity.MinimumWidth = 6;
+            col_resources_Capacity.Name = "col_resources_Capacity";
+            col_resources_Capacity.ReadOnly = true;
+            // 
+            // col_resources_ResponseTime
+            // 
+            col_resources_ResponseTime.HeaderText = "Response Time";
+            col_resources_ResponseTime.Name = "col_resources_ResponseTime";
+            col_resources_ResponseTime.ReadOnly = true;
+            // 
+            // col_resources_Cost
+            // 
+            col_resources_Cost.HeaderText = "Cost ($)";
+            col_resources_Cost.Name = "col_resources_Cost";
+            col_resources_Cost.ReadOnly = true;
+            // 
+            // col_resources_CreatedAt
+            // 
+            col_resources_CreatedAt.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col_resources_CreatedAt.HeaderText = "Added Date";
+            col_resources_CreatedAt.MinimumWidth = 6;
+            col_resources_CreatedAt.Name = "col_resources_CreatedAt";
+            col_resources_CreatedAt.ReadOnly = true;
+            // 
+            // col_resources_ServiceId
+            // 
+            col_resources_ServiceId.HeaderText = "ServiceId";
+            col_resources_ServiceId.Name = "col_resources_ServiceId";
+            col_resources_ServiceId.ReadOnly = true;
+            col_resources_ServiceId.Visible = false;
+            // 
             // FormResources
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -255,6 +291,7 @@
             Name = "FormResources";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Resources";
+            WindowState = FormWindowState.Maximized;
             Load += FormResources_Load;
             ((System.ComponentModel.ISupportInitialize)dgv_Resources).EndInit();
             cms_ResourcesTable.ResumeLayout(false);
@@ -279,11 +316,16 @@
         private ContextMenuStrip cms_ResourcesTable;
         private ToolStripMenuItem btn_EditResource;
         private ToolStripMenuItem btn_DeleteResource;
+        private ToolStripSeparator toolStripMenuItem1;
+        private ToolStripMenuItem btn_CalculateCriteria;
         private DataGridViewTextBoxColumn col_resources_Id;
         private DataGridViewTextBoxColumn col_resources_Name;
         private DataGridViewTextBoxColumn col_resources_Description;
         private DataGridViewTextBoxColumn col_resources_Type;
         private DataGridViewTextBoxColumn col_resources_Capacity;
+        private DataGridViewTextBoxColumn col_resources_ResponseTime;
+        private DataGridViewTextBoxColumn col_resources_Cost;
         private DataGridViewTextBoxColumn col_resources_CreatedAt;
+        private DataGridViewTextBoxColumn col_resources_ServiceId;
     }
 }

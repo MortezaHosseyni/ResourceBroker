@@ -34,6 +34,15 @@ namespace ResourceBroker
             await LoadPackages();
         }
 
+        private async void btn_AddPackage_Click(object sender, EventArgs e)
+        {
+            await CreatePackages();
+
+            await Task.Delay(1000);
+
+            await LoadPackages();
+        }
+
         private async Task CreatePackages()
         {
             try
@@ -84,7 +93,7 @@ namespace ResourceBroker
                 foreach (var package in packages)
                 {
                     var isCompliant = package.IsQosCompliant ? "Compliant" : "Not Compliant";
-                    var description = $"{package.Description}\n\nQoS Score: {package.QosScore} ({isCompliant})\n=========\n";
+                    var description = $"{package.Description}\n\nQoS Score: {package.QosScore} ({ConvertToPercentage(package.QosScore)}%) - {isCompliant}\n=========\n";
                     foreach (var resource in package.Resources)
                     {
                         var resourceType = resource.Type switch
@@ -112,6 +121,15 @@ namespace ResourceBroker
             {
                 MessageBox.Show(ex.Message, @"ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        public static int ConvertToPercentage(double number)
+        {
+            number = Math.Clamp(number, 1.0, 2.3);
+
+            var percentage = (int)(((number - 1.0) / (2.3 - 1.0)) * 100);
+
+            return Math.Max(percentage, 1);
         }
 
         private void lsv_PackagesList_MouseDoubleClick(object sender, MouseEventArgs e)

@@ -8,13 +8,15 @@ namespace ResourceBroker
     public partial class FormResources : Form
     {
         private readonly IResourceRepository _resource;
+        private readonly IServiceRepository _service;
         public required Service Service { get; set; }
 
-        public FormResources(IResourceRepository resource)
+        public FormResources(IResourceRepository resource, IServiceRepository service)
         {
             InitializeComponent();
 
             _resource = resource;
+            _service = service;
         }
 
         private async void FormResources_Load(object sender, EventArgs e)
@@ -76,7 +78,7 @@ namespace ResourceBroker
 
                 var resources = await _resource.FindAsync(r => r.ServiceId == Service.Id);
 
-                foreach (var resource in resources)
+                foreach (var resource in resources.OrderByDescending(x => x.CreatedAt))
                 {
                     var resourceType = resource.Type switch
                     {
@@ -88,13 +90,87 @@ namespace ResourceBroker
                         _ => "Unknown"
                     };
 
-                    dgv_Resources.Rows.Add(resource.Id, resource.Name, resource.Description, resourceType, resource.Capacity, resource.CreatedAt);
+                    dgv_Resources.Rows.Add(resource.Id, resource.Name, resource.Description, resourceType, resource.Capacity, resource.ResponseTime, resource.Cost, resource.CreatedAt, resource.ServiceId);
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(@$"Error loading data: {ex.Message}", @"ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private async void btn_CalculateCriteria_Click(object sender, EventArgs e)
+        {
+            var selectedResources = dgv_Resources.SelectedRows;
+            if (selectedResources.Count <= 0)
+            {
+                MessageBox.Show(@"Please select one or more resource for calculate criteria.", @"Select resources!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            foreach (DataGridViewRow resource in selectedResources)
+            {
+                var resourceId = resource.Cells["col_resources_Id"].Value.ToString();
+                if (string.IsNullOrEmpty(resourceId)) continue;
+
+                var res = await _resource.FindOneAsync(r =>
+                    r!.Id == Guid.Parse(resourceId));
+                if (res == null) continue;
+
+                var service = await _service.FindOneAsync(s => s!.Id == res.ServiceId);
+                if (service == null) continue;
+
+                var responseTime = CalculateResponseTime(service.Upload, service.Download, service.Bandwidth, res.Capacity);
+                var cost = CalculateResourceCost(responseTime, res.Capacity);
+
+                res.ResponseTime = Math.Round(responseTime, 2);
+                res.Cost = Math.Round(cost, 2);
+                res.UpdatedAt = DateTime.Now;
+
+                _resource.Update(res);
+            }
+
+            await Task.Delay(800);
+
+            await LoadResources();
+        }
+
+        public static double CalculateResponseTime(double upload, double download, double bandwidth, int capacity)
+        {
+            if (bandwidth <= 0)
+            {
+                const string errorMessage = @"Bandwidth must be greater than zero.";
+                MessageBox.Show(errorMessage, @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw new ArgumentException(errorMessage, nameof(bandwidth));
+            }
+
+            var uploadTime = (upload / bandwidth) * capacity;
+            var downloadTime = (download / bandwidth) * capacity;
+            var responseTime = uploadTime + downloadTime;
+
+            return responseTime;
+        }
+
+        public static double CalculateResourceCost(double responseTime, int capacity)
+        {
+            if (responseTime < 0)
+            {
+                const string errorMessage = @"Response time must be non-negative.";
+                MessageBox.Show(errorMessage, @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw new ArgumentException(errorMessage, nameof(responseTime));
+            }
+
+            if (capacity <= 0)
+            {
+                const string errorMessage = @"Bandwidth must be greater than zero.";
+                MessageBox.Show(errorMessage, @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw new ArgumentException(errorMessage, nameof(responseTime));
+            }
+
+            const double costFactor = 0.05;
+
+            var resourceCost = responseTime * capacity * costFactor;
+            return resourceCost;
         }
     }
 }

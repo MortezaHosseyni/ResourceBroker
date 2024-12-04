@@ -96,6 +96,7 @@
             Name = "FormRequests";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Requests";
+            WindowState = FormWindowState.Maximized;
             Load += FormRequests_Load;
             ((System.ComponentModel.ISupportInitialize)dgv_Requests).EndInit();
             ResumeLayout(false);
