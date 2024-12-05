@@ -27,10 +27,6 @@ namespace ResourceBroker
             imageList.Images.Add(Image.FromFile("icons/DefaultPackage.png"));
             lsv_PackagesList.LargeImageList = imageList;
 
-            await CreatePackages();
-
-            await Task.Delay(1000);
-
             await LoadPackages();
         }
 
@@ -93,7 +89,8 @@ namespace ResourceBroker
                 foreach (var package in packages)
                 {
                     var isCompliant = package.IsQosCompliant ? "Compliant" : "Not Compliant";
-                    var description = $"{package.Description}\n\nQoS Score: {package.QosScore} ({ConvertToPercentage(package.QosScore)}%) - {isCompliant}\n=========\n";
+                    var totalCost = package.Resources?.Sum(r => r.Cost);
+                    var description = $"{package.Description}\n\nQoS Score: {package.QosScore} ({ConvertToPercentage(package.QosScore)}%) | {isCompliant} | {Math.Round((double)totalCost!, 2)}$\n=========\n";
                     foreach (var resource in package.Resources)
                     {
                         var resourceType = resource.Type switch
@@ -106,7 +103,7 @@ namespace ResourceBroker
                             _ => "Unknown"
                         };
 
-                        description += $"* {resource.Name} ({resource.Service!.Name}) ({resourceType}) - {resource.Capacity}\n";
+                        description += $"* {resource.Name} ({resource.Service!.Name}) ({resourceType}) | {resource.Capacity} | {resource.Cost}$\n";
                     }
 
                     lsv_PackagesList.Items.Add(new ListViewItem

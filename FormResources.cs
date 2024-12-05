@@ -121,7 +121,7 @@ namespace ResourceBroker
                 if (service == null) continue;
 
                 var responseTime = CalculateResponseTime(service.Upload, service.Download, service.Bandwidth, res.Capacity);
-                var cost = CalculateResourceCost(responseTime, res.Capacity);
+                var cost = CalculateResourceCost(responseTime, res.Capacity, res.Type);
 
                 res.ResponseTime = Math.Round(responseTime, 2);
                 res.Cost = Math.Round(cost, 2);
@@ -151,7 +151,7 @@ namespace ResourceBroker
             return responseTime;
         }
 
-        public static double CalculateResourceCost(double responseTime, int capacity)
+        public static double CalculateResourceCost(double responseTime, int capacity, ResourceType type)
         {
             if (responseTime < 0)
             {
@@ -167,7 +167,15 @@ namespace ResourceBroker
                 throw new ArgumentException(errorMessage, nameof(responseTime));
             }
 
-            const double costFactor = 0.05;
+            var costFactor = type switch
+            {
+                ResourceType.Cpu => 0.05, // CPU has higher cost factor
+                ResourceType.Gpu => 0.08, // GPU is even more costly
+                ResourceType.Ram => 0.03, // RAM has moderate cost factor
+                ResourceType.Ssd => 0.04, // SSD is moderately costly
+                ResourceType.Hdd => 0.02, // HDD has the lowest cost factor
+                _ => throw new ArgumentOutOfRangeException(nameof(type), @"Invalid resource type")
+            };
 
             var resourceCost = responseTime * capacity * costFactor;
             return resourceCost;

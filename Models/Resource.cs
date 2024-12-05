@@ -28,6 +28,6 @@ namespace ResourceBroker.Models
 
         public virtual ICollection<Request>? Requests { get; set; }
 
-        public string WithServiceName => $"{Name} ({Service?.Name})";
+        public string WithServiceName => $"{Name} | {Service?.Name} | {Type.ToString()} | {Capacity}GB | {Cost}$";
     }
 }
