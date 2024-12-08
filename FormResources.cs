@@ -181,9 +181,9 @@ namespace ResourceBroker
                 _ => throw new ArgumentOutOfRangeException(nameof(type), @"Invalid resource type")
             };
 
-            var resourceCost = capacity * costFactor * Math.Exp(-responseTime);
-
-            return resourceCost;
+            // Ensure minimum cost with a logarithmic approach
+            var resourceCost = capacity * costFactor * (1 + Math.Log(responseTime + 1));
+            return Math.Max(resourceCost, 0.01); // Minimum cost of 0.01
         }
     }
 }
