@@ -52,6 +52,7 @@ namespace ResourceBroker
             services.AddScoped<Gwo>();
             services.AddScoped<ResourceAllocator>();
             services.AddScoped<PackageGwo>();
+            services.AddScoped<Automaton>();
         }
     }
 }

@@ -8,14 +8,16 @@ namespace ResourceBroker
     public partial class FormPackages : Form
     {
         private readonly PackageGwo _packageOptimizer;
+        private readonly Automaton _automaton;
         private readonly IPackageRepository _package;
         private readonly IResourceRepository _resource;
 
-        public FormPackages(PackageGwo packageOptimizer, IPackageRepository package, IResourceRepository resource)
+        public FormPackages(PackageGwo packageOptimizer, Automaton automaton, IPackageRepository package, IResourceRepository resource)
         {
             InitializeComponent();
 
             _packageOptimizer = packageOptimizer;
+            _automaton = automaton;
             _package = package;
             _resource = resource;
         }
@@ -24,29 +26,37 @@ namespace ResourceBroker
         {
             var imageList = new ImageList();
             imageList.ImageSize = new Size(256, 256);
-            imageList.Images.Add(Image.FromFile("icons/DefaultPackage.png"));
+            imageList.Images.Add(Image.FromFile("icons/PackageAutomaton.png"));
+            imageList.Images.Add(Image.FromFile("icons/PackageGwo.png"));
             lsv_PackagesList.LargeImageList = imageList;
 
             await LoadPackages();
         }
 
-        private async void btn_AddPackage_Click(object sender, EventArgs e)
+        private async void btn_AddPackageGwo_Click(object sender, EventArgs e)
         {
-            await CreatePackages();
+            await CreatePackagesGwo();
 
             await Task.Delay(1000);
 
             await LoadPackages();
         }
 
-        private async Task CreatePackages()
+        private async void btn_AddPackageAutomaton_Click(object sender, EventArgs e)
+        {
+            await CreatePackagesAutomaton();
+
+            await Task.Delay(1000);
+
+            await LoadPackages();
+        }
+
+        private async Task CreatePackagesGwo()
         {
             try
             {
                 if (!await _resource.AnyAsync(r => !r.IsAllocated && r.PackageId == null))
-                {
                     return;
-                }
 
                 var resources = await _resource.FindIncludeAsync(r => !r.IsAllocated && r.PackageId == null, x => x.Service);
 
@@ -70,8 +80,45 @@ namespace ResourceBroker
                         _resource.Update(resource);
                     }
 
-                    await Logger.Log($"Package create with |{package.QosScore}| QoS score and with |{package.Id}| id");
+                    await Logger.Log($"Package created with |{package.QosScore}| QoS score and with |{package.Id}| id using Gray Wolf Optimization algorithm.");
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, @"ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async Task CreatePackagesAutomaton()
+        {
+            try
+            {
+                if (!await _resource.AnyAsync(r => !r.IsAllocated && r.PackageId == null))
+                    return;
+
+                var resources = await _resource.FindIncludeAsync(r => !r.IsAllocated && r.PackageId == null, x => x.Service);
+
+                var createdPackages = _automaton.CreatePackages(resources.ToList());
+                var package = createdPackages.OrderByDescending(x => x.QosScore).First();
+
+                if (package.Resources == null || !package.Resources.Any())
+                    return;
+
+                var packageResources = package.Resources;
+                package.Resources = null;
+
+                await Task.Delay(500);
+
+                _package.Add(package);
+                foreach (var resource in packageResources)
+                {
+                    resource.Service = null;
+                    resource.PackageId = package.Id;
+                    resource.UpdatedAt = DateTime.Now;
+                    _resource.Update(resource);
+                }
+
+                await Logger.Log($"Package created with |{package.QosScore}| QoS score and with |{package.Id}| id using Learning Automaton algorithm.");
             }
             catch (Exception ex)
             {
@@ -91,7 +138,7 @@ namespace ResourceBroker
                     var isCompliant = package.IsQosCompliant ? "Compliant" : "Not Compliant";
                     var totalCost = package.Resources?.Sum(r => r.Cost);
                     var description = $"{package.Description}\n\nQoS Score: {package.QosScore} ({ConvertToPercentage(package.QosScore)}%) | {isCompliant} | {Math.Round((double)totalCost!, 2)}$\n=========\n";
-                    foreach (var resource in package.Resources)
+                    foreach (var resource in package.Resources.OrderBy(x => x.Type))
                     {
                         var resourceType = resource.Type switch
                         {
@@ -110,7 +157,7 @@ namespace ResourceBroker
                     {
                         Text = package.Title,
                         Name = description,
-                        ImageIndex = 0
+                        ImageIndex = package.Description!.Contains("GWO") ? 1 : 0
                     });
                 }
             }

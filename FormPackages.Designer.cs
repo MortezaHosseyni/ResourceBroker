@@ -28,9 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPackages));
             lsv_PackagesList = new ListView();
-            btn_AddPackage = new Button();
+            btn_AddPackageGwo = new Button();
+            tlt_Tooltip = new ToolTip(components);
+            btn_AddPackageAutomaton = new Button();
             SuspendLayout();
             // 
             // lsv_PackagesList
@@ -45,23 +48,41 @@
             lsv_PackagesList.UseCompatibleStateImageBehavior = false;
             lsv_PackagesList.MouseDoubleClick += lsv_PackagesList_MouseDoubleClick;
             // 
-            // btn_AddPackage
+            // btn_AddPackageGwo
             // 
-            btn_AddPackage.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btn_AddPackage.Location = new Point(825, 486);
-            btn_AddPackage.Name = "btn_AddPackage";
-            btn_AddPackage.Size = new Size(62, 50);
-            btn_AddPackage.TabIndex = 1;
-            btn_AddPackage.Text = "➕";
-            btn_AddPackage.UseVisualStyleBackColor = true;
-            btn_AddPackage.Click += btn_AddPackage_Click;
+            btn_AddPackageGwo.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btn_AddPackageGwo.BackColor = Color.Gray;
+            btn_AddPackageGwo.ForeColor = Color.White;
+            btn_AddPackageGwo.Location = new Point(819, 424);
+            btn_AddPackageGwo.Name = "btn_AddPackageGwo";
+            btn_AddPackageGwo.Size = new Size(62, 50);
+            btn_AddPackageGwo.TabIndex = 1;
+            btn_AddPackageGwo.Text = "➕";
+            tlt_Tooltip.SetToolTip(btn_AddPackageGwo, "Create package using Gray Wolf Optimization algorithm");
+            btn_AddPackageGwo.UseVisualStyleBackColor = false;
+            btn_AddPackageGwo.Click += btn_AddPackageGwo_Click;
+            // 
+            // btn_AddPackageAutomaton
+            // 
+            btn_AddPackageAutomaton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btn_AddPackageAutomaton.BackColor = Color.Green;
+            btn_AddPackageAutomaton.ForeColor = Color.White;
+            btn_AddPackageAutomaton.Location = new Point(819, 480);
+            btn_AddPackageAutomaton.Name = "btn_AddPackageAutomaton";
+            btn_AddPackageAutomaton.Size = new Size(62, 50);
+            btn_AddPackageAutomaton.TabIndex = 2;
+            btn_AddPackageAutomaton.Text = "➕";
+            tlt_Tooltip.SetToolTip(btn_AddPackageAutomaton, "Create package using Learning Automaton algorithm.");
+            btn_AddPackageAutomaton.UseVisualStyleBackColor = false;
+            btn_AddPackageAutomaton.Click += btn_AddPackageAutomaton_Click;
             // 
             // FormPackages
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(893, 542);
-            Controls.Add(btn_AddPackage);
+            Controls.Add(btn_AddPackageAutomaton);
+            Controls.Add(btn_AddPackageGwo);
             Controls.Add(lsv_PackagesList);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(909, 581);
@@ -76,6 +97,8 @@
         #endregion
 
         private ListView lsv_PackagesList;
-        private Button btn_AddPackage;
+        private Button btn_AddPackageGwo;
+        private ToolTip tlt_Tooltip;
+        private Button btn_AddPackageAutomaton;
     }
 }

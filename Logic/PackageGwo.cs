@@ -145,15 +145,15 @@ namespace ResourceBroker.Logic
                 .Count() == 1 ? 1.0 : 0.5;
 
             // Weighted Sum of Scores
-            var rawScore = 0.25 * diversityScore +
+            var rawScore = (0.25 * diversityScore +
                            0.2 * availabilityScore +
                            0.15 * serviceConsistencyScore +
                            0.1 * capacityScore +
                            0.1 * uploadScore +
                            0.1 * downloadScore +
-                           0.1 * bandwidthScore +
-                           0.05 * responseTimeScore +
-                           0.05 * costScore;
+                           0.1 * bandwidthScore) -
+                           (0.05 * responseTimeScore +
+                           0.05 * costScore);
 
             return Math.Round((double)rawScore!, 2);
         }
@@ -173,7 +173,7 @@ namespace ResourceBroker.Logic
                 {
                     Id = Guid.NewGuid(),
                     Title = $"Package #{DateTime.Now:yyyyMMdd-HHmmss}",
-                    Description = "Optimized multi-resource package",
+                    Description = "Optimized multi-resource package (GWO)",
                     QosScore = wolf.Fitness,
                     IsQosCompliant = wolf.Fitness >= 0.75,
                     Resources = resourcesForPackage,

@@ -23,6 +23,17 @@ namespace ResourceBroker
         private async void FormMain_Load(object sender, EventArgs e)
         {
             await LoadLogs();
+
+            rtb_MainLogs.SelectionStart = rtb_MainLogs.Text.Length;
+            rtb_MainLogs.ScrollToCaret();
+        }
+
+        private async void FormMain_Activated(object sender, EventArgs e)
+        {
+            await LoadLogs();
+
+            rtb_MainLogs.SelectionStart = rtb_MainLogs.Text.Length;
+            rtb_MainLogs.ScrollToCaret();
         }
 
         private async Task LoadLogs()

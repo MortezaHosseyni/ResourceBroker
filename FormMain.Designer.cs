@@ -155,6 +155,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Resource Broker";
             WindowState = FormWindowState.Maximized;
+            Activated += FormMain_Activated;
             Load += FormMain_Load;
             ResumeLayout(false);
             PerformLayout();

@@ -120,7 +120,7 @@ namespace ResourceBroker
                 var service = await _service.FindOneAsync(s => s!.Id == res.ServiceId);
                 if (service == null) continue;
 
-                var responseTime = CalculateResponseTime(service.Upload, service.Download, service.Bandwidth, res.Capacity);
+                var responseTime = CalculateResponseTime(service.Upload, service.Download, service.Bandwidth, res.Capacity, res.Type);
                 var cost = CalculateResourceCost(responseTime, res.Capacity, res.Type);
 
                 res.ResponseTime = Math.Round(responseTime, 2);
@@ -135,34 +135,38 @@ namespace ResourceBroker
             await LoadResources();
         }
 
-        public static double CalculateResponseTime(double upload, double download, double bandwidth, int capacity)
+        public static double CalculateResponseTime(double upload, double download, double bandwidth, int capacity, ResourceType type)
         {
-            if (bandwidth <= 0)
+            if (bandwidth <= 0 || capacity <= 0)
             {
-                const string errorMessage = @"Bandwidth must be greater than zero.";
+                const string errorMessage = @"Bandwidth and capacity must be greater than zero.";
                 MessageBox.Show(errorMessage, @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 throw new ArgumentException(errorMessage, nameof(bandwidth));
             }
 
-            var uploadTime = (upload / bandwidth) * capacity;
-            var downloadTime = (download / bandwidth) * capacity;
-            var responseTime = uploadTime + downloadTime;
+            var transferTime = (upload + download) / bandwidth;
+            var processingTime = 1.0 / capacity;
+
+            var typeFactor = type switch
+            {
+                ResourceType.Cpu => 1.2,   // CPU increases response time
+                ResourceType.Gpu => 1.5,   // GPU has the highest impact
+                ResourceType.Ram => 1.1,   // RAM has moderate impact
+                ResourceType.Ssd => 1.05,  // SSD has slight impact
+                ResourceType.Hdd => 1.0,   // HDD has no additional impact
+                _ => throw new ArgumentOutOfRangeException(nameof(type), @"Invalid resource type")
+            };
+
+            var responseTime = (transferTime + processingTime) * typeFactor;
 
             return responseTime;
         }
 
         public static double CalculateResourceCost(double responseTime, int capacity, ResourceType type)
         {
-            if (responseTime < 0)
+            if (responseTime < 0 || capacity <= 0)
             {
-                const string errorMessage = @"Response time must be non-negative.";
-                MessageBox.Show(errorMessage, @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                throw new ArgumentException(errorMessage, nameof(responseTime));
-            }
-
-            if (capacity <= 0)
-            {
-                const string errorMessage = @"Bandwidth must be greater than zero.";
+                const string errorMessage = @"Response time and Capacity must be non-negative.";
                 MessageBox.Show(errorMessage, @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 throw new ArgumentException(errorMessage, nameof(responseTime));
             }
@@ -177,7 +181,8 @@ namespace ResourceBroker
                 _ => throw new ArgumentOutOfRangeException(nameof(type), @"Invalid resource type")
             };
 
-            var resourceCost = responseTime * capacity * costFactor;
+            var resourceCost = capacity * costFactor * Math.Exp(-responseTime);
+
             return resourceCost;
         }
     }
