@@ -166,6 +166,30 @@ namespace ResourceBroker.Logic
 
         private static Package CreatePackage(Dictionary<ResourceType, Resource> resources, double fitness)
         {
+            var startTime = DateTime.Now;
+
+            // Total metrics
+            var totalCapacity = resources.Values.Sum(r => r.Capacity);
+            var utilizedUpload = resources.Values.Sum(r => r.Service?.Upload ?? 0);
+            var utilizedDownload = resources.Values.Sum(r => r.Service?.Download ?? 0);
+            var totalBandwidth = resources.Values.Sum(r => r.Service?.Bandwidth ?? 0);
+            var totalCost = resources.Values.Sum(r => r.Cost);
+            var avgResponseTime = resources.Values.Average(r => r.ResponseTime);
+
+            // Efficiency calculation
+            var efficiency = totalCapacity > 0
+                ? (utilizedUpload + utilizedDownload + totalBandwidth) / totalCapacity
+                : 0;
+
+            // Complexity calculation
+            var uniqueResourceTypes = resources.Keys.Distinct().Count();
+            var complexity = 0.5 * (uniqueResourceTypes / (double)RequiredResourceTypes) +
+                             0.3 * (1.0 / (1 + totalCost)) +
+                             0.2 * (1.0 / (1 + avgResponseTime));
+
+            var endTime = DateTime.Now;
+            var creationTime = (endTime - startTime).TotalMilliseconds;
+
             return new Package
             {
                 Id = Guid.NewGuid(),
@@ -174,6 +198,10 @@ namespace ResourceBroker.Logic
                 QosScore = fitness,
                 IsQosCompliant = fitness >= 0.75,
                 Resources = resources.Values.ToList(),
+                TakenTimeForCreation = creationTime,
+                Efficiency = Math.Round(efficiency, 2),
+                Complexity = Math.Round(complexity, 2),
+                Algorithm = PackageAlgorithmType.Automaton,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now
             };

@@ -48,6 +48,8 @@ namespace ResourceBroker
             services.AddTransient<FormRequests>();
             services.AddTransient<FormMakeRequest>();
             services.AddTransient<FormAllocations>();
+            services.AddTransient<FormReports>();
+            services.AddTransient<FormChart>();
 
             services.AddScoped<Gwo>();
             services.AddScoped<ResourceAllocator>();

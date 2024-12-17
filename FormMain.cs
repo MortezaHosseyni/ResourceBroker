@@ -82,6 +82,14 @@ namespace ResourceBroker
             form.ShowDialog();
         }
 
+        private void btn_Reports_Click(object sender, EventArgs e)
+        {
+            using var scope = _serviceProvider.CreateScope();
+
+            var form = scope.ServiceProvider.GetRequiredService<FormReports>();
+            form.ShowDialog();
+        }
+
         private async void btn_Allocate_Click(object sender, EventArgs e)
         {
             var requests = await _request.GetAllPendingRequests();

@@ -137,7 +137,8 @@ namespace ResourceBroker
                 {
                     var isCompliant = package.IsQosCompliant ? "Compliant" : "Not Compliant";
                     var totalCost = package.Resources?.Sum(r => r.Cost);
-                    var description = $"{package.Description}\n\nQoS Score: {package.QosScore} ({ConvertToPercentage(package.QosScore)}%) | {isCompliant} | {Math.Round((double)totalCost!, 2)}$\n=========\n";
+                    var description = $"{package.Description}\n\nQoS Score: {package.QosScore} ({ConvertToPercentage(package.QosScore)}%) | {isCompliant} | {Math.Round((double)totalCost!, 2)}$\n" +
+                                      $"Creation Time: {package.TakenTimeForCreation}ms | Efficiency: {package.Efficiency} | Complexity: {package.Complexity}\n=========\n";
                     foreach (var resource in package.Resources.OrderBy(x => x.Type))
                     {
                         var resourceType = resource.Type switch
@@ -157,7 +158,7 @@ namespace ResourceBroker
                     {
                         Text = package.Title,
                         Name = description,
-                        ImageIndex = package.Description!.Contains("GWO") ? 1 : 0
+                        ImageIndex = package.Algorithm == PackageAlgorithmType.Gwo ? 1 : 0
                     });
                 }
             }

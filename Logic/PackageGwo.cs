@@ -146,14 +146,14 @@ namespace ResourceBroker.Logic
 
             // Weighted Sum of Scores
             var rawScore = (0.25 * diversityScore +
-                           0.2 * availabilityScore +
-                           0.15 * serviceConsistencyScore +
-                           0.1 * capacityScore +
-                           0.1 * uploadScore +
-                           0.1 * downloadScore +
-                           0.1 * bandwidthScore) -
+                            0.2 * availabilityScore +
+                            0.15 * serviceConsistencyScore +
+                            0.1 * capacityScore +
+                            0.1 * uploadScore +
+                            0.1 * downloadScore +
+                            0.1 * bandwidthScore) -
                            (0.05 * responseTimeScore +
-                           0.05 * costScore);
+                            0.05 * costScore);
 
             return Math.Round((double)rawScore!, 2);
         }
@@ -164,11 +164,36 @@ namespace ResourceBroker.Logic
 
             foreach (var wolf in wolves.OrderByDescending(w => w.Fitness))
             {
+                var startTime = DateTime.Now;
+
                 var resourcesForPackage = wolf.Resources.Values
                     .Where(unallocatedResources.Contains) // Ensure resources are unallocated
                     .ToList();
 
                 if (resourcesForPackage.Count != RequiredResourceTypes) continue;
+
+                // Calculate Efficiency
+                var totalCapacity = resourcesForPackage.Sum(r => r.Capacity);
+                var utilizedUpload = resourcesForPackage.Sum(r => r.Service?.Upload ?? 0);
+                var utilizedDownload = resourcesForPackage.Sum(r => r.Service?.Download ?? 0);
+                var totalBandwidth = resourcesForPackage.Sum(r => r.Service?.Bandwidth ?? 0);
+                var totalCost = resourcesForPackage.Sum(r => r.Cost);
+                var avgResponseTime = resourcesForPackage.Average(r => r.ResponseTime);
+
+                var efficiency = totalCapacity > 0
+                    ? (utilizedUpload + utilizedDownload + totalBandwidth) / totalCapacity
+                    : 0;
+
+                // Calculate Complexity
+                var uniqueResourceTypes = resourcesForPackage.Select(r => r.Type).Distinct().Count();
+                var complexity = 0.5 * (uniqueResourceTypes / (double)RequiredResourceTypes) +
+                                 0.3 * (1.0 / (1 + totalCost)) +
+                                 0.2 * (1.0 / (1 + avgResponseTime));
+
+                // Measure creation time
+                var endTime = DateTime.Now;
+                var creationTime = (endTime - startTime).TotalMilliseconds;
+
                 selectedPackages.Add(new Package
                 {
                     Id = Guid.NewGuid(),
@@ -177,6 +202,10 @@ namespace ResourceBroker.Logic
                     QosScore = wolf.Fitness,
                     IsQosCompliant = wolf.Fitness >= 0.75,
                     Resources = resourcesForPackage,
+                    TakenTimeForCreation = creationTime,
+                    Efficiency = Math.Round(efficiency, 2),
+                    Complexity = Math.Round(complexity, 2),
+                    Algorithm = PackageAlgorithmType.Gwo,
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now
                 });
@@ -191,7 +220,6 @@ namespace ResourceBroker.Logic
 
             return selectedPackages;
         }
-
 
         private static bool ValidateResourceAvailability(Dictionary<ResourceType, List<Resource>> resourcesByType)
         {
@@ -221,10 +249,10 @@ namespace ResourceBroker.Logic
                 {
                     var candidates = new[]
                     {
-                    alpha.Resources[resourceType],
-                    beta.Resources[resourceType],
-                    delta.Resources[resourceType]
-                };
+                        alpha.Resources[resourceType],
+                        beta.Resources[resourceType],
+                        delta.Resources[resourceType]
+                    };
 
                     // Simple selection strategy
                     var bestIndex = FindBestResourceIndex(candidates, A, C);

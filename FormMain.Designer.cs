@@ -39,6 +39,7 @@
             btn_Allocations = new Button();
             sts_BottomStatus = new StatusStrip();
             tlt_Hints = new ToolTip(components);
+            btn_Reports = new Button();
             SuspendLayout();
             // 
             // rtb_MainLogs
@@ -136,11 +137,24 @@
             tlt_Hints.InitialDelay = 500;
             tlt_Hints.ReshowDelay = 100;
             // 
+            // btn_Reports
+            // 
+            btn_Reports.Anchor = AnchorStyles.Left;
+            btn_Reports.Location = new Point(12, 380);
+            btn_Reports.Name = "btn_Reports";
+            btn_Reports.Size = new Size(412, 44);
+            btn_Reports.TabIndex = 9;
+            btn_Reports.Text = "Reports";
+            tlt_Hints.SetToolTip(btn_Reports, "System reports");
+            btn_Reports.UseVisualStyleBackColor = true;
+            btn_Reports.Click += btn_Reports_Click;
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(886, 583);
+            Controls.Add(btn_Reports);
             Controls.Add(sts_BottomStatus);
             Controls.Add(btn_Allocations);
             Controls.Add(btn_Requests);
@@ -173,5 +187,6 @@
         private Button btn_Allocations;
         private StatusStrip sts_BottomStatus;
         private ToolTip tlt_Hints;
+        private Button btn_Reports;
     }
 }
