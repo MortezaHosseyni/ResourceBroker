@@ -27,6 +27,14 @@ namespace ResourceBroker
             chartForm.ShowDialog();
         }
 
+        private void ShowScatterChartForm(string title, string xAxisTitle, string yAxisTitle, List<KeyValuePair<double, double>> dataPoints)
+        {
+            using var scope = _serviceProvider.CreateScope();
+
+            var chartForm = scope.ServiceProvider.GetRequiredService<FormChart>();
+            chartForm.InitializeScatterChart(title, xAxisTitle, yAxisTitle, dataPoints);
+        }
+
         private async void btn_Comparison_Click(object sender, EventArgs e)
         {
             var packages = await _package.GetAllPackages();
@@ -65,6 +73,18 @@ namespace ResourceBroker
             ShowChartForm("GWO Resource Utilization Efficiency", dataPoints, PlotType.Bar);
         }
 
+        private async void btn_GwoTakenTimeVsQoS_Click(object sender, EventArgs e)
+        {
+            var packages = await _package.GetAllPackages();
+
+            var dataPoints = packages
+                .Where(p => p.Algorithm == PackageAlgorithmType.Gwo)
+                .Select(p => new KeyValuePair<double, double>(p.QosScore, p.TakenTimeForCreation))
+                .ToList();
+
+            ShowScatterChartForm("GWO Execution Time vs. QoS Score", "QoS Score", "Execution Time (ms)", dataPoints);
+        }
+
         private async void btn_AutomatonCurve_Click(object sender, EventArgs e)
         {
             var packages = await _package.GetAllPackages();
@@ -88,6 +108,18 @@ namespace ResourceBroker
                 .ToList();
 
             ShowChartForm("Automaton Resource Utilization Efficiency", dataPoints, PlotType.Bar);
+        }
+
+        private async void btn_AutomatonTakenTimeVsQoS_Click(object sender, EventArgs e)
+        {
+            var packages = await _package.GetAllPackages();
+
+            var dataPoints = packages
+                .Where(p => p.Algorithm == PackageAlgorithmType.Automaton)
+                .Select(p => new KeyValuePair<double, double>(p.QosScore, p.TakenTimeForCreation))
+                .ToList();
+
+            ShowScatterChartForm("Automaton Execution Time vs. QoS Score", "QoS Score", "Execution Time (ms)", dataPoints);
         }
     }
 }

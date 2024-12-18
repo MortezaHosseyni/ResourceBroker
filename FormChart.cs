@@ -40,7 +40,7 @@ namespace ResourceBroker
                     // Add data to BarSeries
                     foreach (var point in dataPoints)
                     {
-                        barSeries.Items.Add(new BarItem { Value = point.Value });
+                        barSeries.Items.Add(new BarItem { Value = point.Value, Color = point.Key.Contains("Automaton") ? OxyColors.Green : OxyColors.DarkGray });
                     }
 
                     plotModel.Series.Add(barSeries);
@@ -67,7 +67,7 @@ namespace ResourceBroker
                 case PlotType.Line:
                 {
                     // Create LineSeries
-                    var lineSeries = new LineSeries { Title = "Line Data" };
+                    var lineSeries = new LineSeries { Title = "Line Data", Color = title.Contains("Automaton") ? OxyColors.Green : OxyColors.DarkGray };
 
                     foreach (var point in dataPoints)
                     {
@@ -98,6 +98,61 @@ namespace ResourceBroker
 
             // Assign PlotModel to PlotView
             _plotView.Model = plotModel;
+        }
+
+        public void InitializeScatterChart(string title, string xAxisTitle, string yAxisTitle, List<KeyValuePair<double, double>> dataPoints)
+        {
+            var plotModel = new PlotModel { Title = title };
+
+            // Configure Axes
+            plotModel.Axes.Add(new LinearAxis
+            {
+                Position = AxisPosition.Bottom,
+                Title = xAxisTitle,
+                MinimumPadding = 0.1,
+                MaximumPadding = 0.1
+            });
+
+            plotModel.Axes.Add(new LinearAxis
+            {
+                Position = AxisPosition.Left,
+                Title = yAxisTitle,
+                MinimumPadding = 0.1,
+                MaximumPadding = 0.1
+            });
+
+            // Create Scatter Series
+            var scatterSeries = new ScatterSeries
+            {
+                MarkerType = MarkerType.Diamond,
+                MarkerSize = 5,
+                MarkerFill = title.Contains("Automaton") ? OxyColors.Green : OxyColors.Black
+            };
+
+            foreach (var dataPoint in dataPoints)
+            {
+                scatterSeries.Points.Add(new ScatterPoint(dataPoint.Key, dataPoint.Value));
+            }
+
+            plotModel.Series.Add(scatterSeries);
+
+            // Display in Form
+            var plotView = new PlotView
+            {
+                Dock = DockStyle.Fill,
+                Model = plotModel
+            };
+
+            var form = new Form
+            {
+                Text = title,
+                Width = 800,
+                Height = 600,
+                StartPosition = FormStartPosition.CenterScreen,
+                WindowState = FormWindowState.Maximized
+            };
+            form.Controls.Add(plotView);
+            form.ShowDialog();
         }
     }
 }
