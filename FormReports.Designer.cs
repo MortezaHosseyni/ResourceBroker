@@ -36,6 +36,8 @@
             btn_AutomatonEfficiency = new Button();
             btn_GwoTakenTimeVsQoS = new Button();
             btn_AutomatonTakenTimeVsQoS = new Button();
+            btn_AutomatonAccessibilityAvailability = new Button();
+            btn_GwoAccessibilityAvailability = new Button();
             SuspendLayout();
             // 
             // btn_Comparison
@@ -50,7 +52,7 @@
             // 
             // btn_GwoCurve
             // 
-            btn_GwoCurve.Location = new Point(12, 120);
+            btn_GwoCurve.Location = new Point(12, 151);
             btn_GwoCurve.Name = "btn_GwoCurve";
             btn_GwoCurve.Size = new Size(325, 49);
             btn_GwoCurve.TabIndex = 1;
@@ -60,7 +62,7 @@
             // 
             // btn_GwoEfficiency
             // 
-            btn_GwoEfficiency.Location = new Point(12, 175);
+            btn_GwoEfficiency.Location = new Point(12, 206);
             btn_GwoEfficiency.Name = "btn_GwoEfficiency";
             btn_GwoEfficiency.Size = new Size(325, 49);
             btn_GwoEfficiency.TabIndex = 3;
@@ -70,7 +72,7 @@
             // 
             // btn_AutomatonCurve
             // 
-            btn_AutomatonCurve.Location = new Point(12, 343);
+            btn_AutomatonCurve.Location = new Point(12, 443);
             btn_AutomatonCurve.Name = "btn_AutomatonCurve";
             btn_AutomatonCurve.Size = new Size(325, 49);
             btn_AutomatonCurve.TabIndex = 4;
@@ -80,7 +82,7 @@
             // 
             // btn_AutomatonEfficiency
             // 
-            btn_AutomatonEfficiency.Location = new Point(12, 398);
+            btn_AutomatonEfficiency.Location = new Point(12, 498);
             btn_AutomatonEfficiency.Name = "btn_AutomatonEfficiency";
             btn_AutomatonEfficiency.Size = new Size(325, 49);
             btn_AutomatonEfficiency.TabIndex = 5;
@@ -90,7 +92,7 @@
             // 
             // btn_GwoTakenTimeVsQoS
             // 
-            btn_GwoTakenTimeVsQoS.Location = new Point(12, 230);
+            btn_GwoTakenTimeVsQoS.Location = new Point(12, 261);
             btn_GwoTakenTimeVsQoS.Name = "btn_GwoTakenTimeVsQoS";
             btn_GwoTakenTimeVsQoS.Size = new Size(325, 49);
             btn_GwoTakenTimeVsQoS.TabIndex = 6;
@@ -100,7 +102,7 @@
             // 
             // btn_AutomatonTakenTimeVsQoS
             // 
-            btn_AutomatonTakenTimeVsQoS.Location = new Point(12, 453);
+            btn_AutomatonTakenTimeVsQoS.Location = new Point(12, 553);
             btn_AutomatonTakenTimeVsQoS.Name = "btn_AutomatonTakenTimeVsQoS";
             btn_AutomatonTakenTimeVsQoS.Size = new Size(325, 49);
             btn_AutomatonTakenTimeVsQoS.TabIndex = 7;
@@ -108,11 +110,33 @@
             btn_AutomatonTakenTimeVsQoS.UseVisualStyleBackColor = true;
             btn_AutomatonTakenTimeVsQoS.Click += btn_AutomatonTakenTimeVsQoS_Click;
             // 
+            // btn_AutomatonAccessibilityAvailability
+            // 
+            btn_AutomatonAccessibilityAvailability.Location = new Point(12, 608);
+            btn_AutomatonAccessibilityAvailability.Name = "btn_AutomatonAccessibilityAvailability";
+            btn_AutomatonAccessibilityAvailability.Size = new Size(325, 49);
+            btn_AutomatonAccessibilityAvailability.TabIndex = 8;
+            btn_AutomatonAccessibilityAvailability.Text = "Automaton Accessibility vs Availability";
+            btn_AutomatonAccessibilityAvailability.UseVisualStyleBackColor = true;
+            btn_AutomatonAccessibilityAvailability.Click += btn_AutomatonAccessibilityAvailability_Click;
+            // 
+            // btn_GwoAccessibilityAvailability
+            // 
+            btn_GwoAccessibilityAvailability.Location = new Point(12, 316);
+            btn_GwoAccessibilityAvailability.Name = "btn_GwoAccessibilityAvailability";
+            btn_GwoAccessibilityAvailability.Size = new Size(325, 49);
+            btn_GwoAccessibilityAvailability.TabIndex = 9;
+            btn_GwoAccessibilityAvailability.Text = "GWO Accessibility vs Availability";
+            btn_GwoAccessibilityAvailability.UseVisualStyleBackColor = true;
+            btn_GwoAccessibilityAvailability.Click += btn_GwoAccessibilityAvailability_Click;
+            // 
             // FormReports
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(349, 514);
+            ClientSize = new Size(349, 669);
+            Controls.Add(btn_GwoAccessibilityAvailability);
+            Controls.Add(btn_AutomatonAccessibilityAvailability);
             Controls.Add(btn_AutomatonTakenTimeVsQoS);
             Controls.Add(btn_GwoTakenTimeVsQoS);
             Controls.Add(btn_AutomatonEfficiency);
@@ -137,5 +161,7 @@
         private Button btn_AutomatonEfficiency;
         private Button btn_GwoTakenTimeVsQoS;
         private Button btn_AutomatonTakenTimeVsQoS;
+        private Button btn_AutomatonAccessibilityAvailability;
+        private Button btn_GwoAccessibilityAvailability;
     }
 }

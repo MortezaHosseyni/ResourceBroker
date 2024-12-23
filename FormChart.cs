@@ -154,5 +154,75 @@ namespace ResourceBroker
             form.Controls.Add(plotView);
             form.ShowDialog();
         }
+
+        public void InitializeAccessibilityAvailabilityChart(
+            string title,
+            List<KeyValuePair<string, (double Accessibility, double Availability)>> dataPoints)
+        {
+            var plotModel = new PlotModel { Title = title };
+
+            // Configure Axes
+            plotModel.Axes.Add(new CategoryAxis
+            {
+                Position = AxisPosition.Left, // For BarSeries, categories are on the left
+                Title = "Packages",
+                ItemsSource = dataPoints.Select(dp => dp.Key).ToList()
+            });
+
+            plotModel.Axes.Add(new LinearAxis
+            {
+                Position = AxisPosition.Bottom, // Horizontal axis for values
+                Title = "Percentage",
+                Minimum = 0,
+                Maximum = 1 // Assuming percentages as fractions (0 to 1)
+            });
+
+            // Add Accessibility Series
+            var accessibilitySeries = new BarSeries
+            {
+                Title = "Accessibility",
+                FillColor = OxyColors.Green,
+                StrokeColor = OxyColors.Black,
+                StrokeThickness = 1
+            };
+
+            foreach (var dataPoint in dataPoints)
+            {
+                accessibilitySeries.Items.Add(new BarItem { Value = dataPoint.Value.Accessibility });
+            }
+
+            // Add Availability Series
+            var availabilitySeries = new BarSeries
+            {
+                Title = "Availability",
+                FillColor = OxyColors.Blue,
+                StrokeColor = OxyColors.Black,
+                StrokeThickness = 1
+            };
+
+            foreach (var dataPoint in dataPoints)
+            {
+                availabilitySeries.Items.Add(new BarItem { Value = dataPoint.Value.Availability });
+            }
+
+            plotModel.Series.Add(accessibilitySeries);
+            plotModel.Series.Add(availabilitySeries);
+
+            // Display in Form
+            var plotView = new PlotView
+            {
+                Dock = DockStyle.Fill,
+                Model = plotModel
+            };
+
+            var form = new Form
+            {
+                Text = title,
+                Width = 800,
+                Height = 600
+            };
+            form.Controls.Add(plotView);
+            form.ShowDialog();
+        }
     }
 }
